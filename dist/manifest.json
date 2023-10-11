@@ -1,0 +1,144 @@
+{
+    "_version": "1.49.0",
+    "sap.app": {
+        "id": "ranpak.wz.rebatelist",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.1"
+        },
+        "title": "{{title}}",
+        "description": "{{subtitle}}",
+        "resources": "resources.json",
+        "ach": "ach",
+        "crossNavigation": {
+            "inbounds": {
+                "intent1": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "myrebates",
+                    "action": "display"
+                }
+            }
+        },
+        "dataSources": {
+            "oMyRebates_alias": {
+                "uri": "Workzone/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml",
+                    "annotations": [
+                        "annotation0"
+                    ]
+                }
+            },
+            "annotation0": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation0.xml",
+                "settings": {
+                    "localUri": "annotations/annotation0.xml"
+                }
+            }
+        }
+    },
+    "sap.cloud": {
+        "service": "ranpak-wz-rebatelist",
+        "public": true
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "sap-icon://task",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "rootView": {
+            "viewName": "ranpak.wz.rebatelist.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        },
+        "dependencies": {
+            "minUI5Version": "1.114.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.ui.layout": {},
+                "sap.f": {},
+                "sap.ui.comp": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "ranpak.wz.rebatelist.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "oMyRebates_alias",
+                "type": "sap.ui.model.odata.v2.ODataModel",
+                "preload": true
+            },
+            "AppModel": {
+                "type": "sap.ui.model.json.JSONModel",
+                "settings": {},
+                "preload": false
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "ranpak.wz.rebatelist.view",
+                "controlAggregation": "pages",
+                "controlId": "idMyRebatesApp",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "name": "ListView",
+                    "pattern": "",
+                    "target": [
+                        "ListView"
+                    ]
+                }
+            ],
+            "targets": {
+                "ListView": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "ListView",
+                    "viewName": "ListView"
+                }
+            }
+        }
+    }
+}

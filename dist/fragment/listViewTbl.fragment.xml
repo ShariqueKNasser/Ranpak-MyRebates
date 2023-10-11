@@ -1,0 +1,246 @@
+<core:FragmentDefinition
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+>
+    <smartTable:SmartTable
+        id="idMyRebatesTbl"
+        smartFilterId="idMyRebatesFB"
+        tableType="Table"
+        editable="false"
+        entitySet="ZC_MyRebates"
+        useVariantManagement="true"
+        useTablePersonalisation="true"
+        showRowCount="true"
+        enableExport="true"
+        enableAutoBinding="true"
+        smartVariant="idMyRebatesVariant"
+        persistencyKey="MyRebates_TBL"
+        beforeRebindTable="onBeforeRebindTbl"
+        placeToolbarInTable="true"
+        beforeExport="onMyRebatesExport"
+        class="sapUiTinyMarginTop"
+        header="{i18n>title}"
+    >
+        <Table growing="true" sticky="ColumnHeaders,HeaderToolbar">
+            <columns>
+                <Column width="13rem">
+                    <Text text="{i18n>columnCustomer}" />
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'CustomerID', 'columnIndex': '1', 'leadingProperty': 'CustomerID', 'sortProperty': 'CustomerID', 'filterProperty': 'CustomerID'}"
+                        />
+                    </customData>
+                </Column>
+                <Column
+                    minScreenWidth="Tablet"
+                    demandPopin="true"
+                >
+                    <Text text="{i18n>columnRebateID}" />
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'RebateID', 'columnIndex': '2', 'leadingProperty': 'RebateID', 'sortProperty': 'RebateID', 'filterProperty': 'RebateID'}"
+                        />
+                    </customData>
+                </Column>
+
+                <Column
+                    width="13rem"
+                    minScreenWidth="Tablet"
+                    demandPopin="true"
+                >
+                    <Text text="{i18n>columnEndUser}" />
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'EndUserID', 'columnIndex': '3', 'leadingProperty': 'EndUserID', 'sortProperty': 'EndUserID', 'filterProperty': 'EndUserID'}"
+                        />
+                    </customData>
+                </Column>
+                <Column
+                    width="13rem"
+                    minScreenWidth="Tablet"
+                    demandPopin="true"
+                >
+                    <Text text="{i18n>columnMaterial}" />
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'MaterialID', 'columnIndex': '4', 'leadingProperty': 'MaterialID', 'sortProperty': 'MaterialID', 'filterProperty': 'MaterialID'}"
+                        />
+                    </customData>
+                </Column>
+                <Column
+                    minScreenWidth="Desktop"
+                    demandPopin="true"
+                >
+                    <Text text="{i18n>columnUnit}" />
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'Unit', 'columnIndex': '5', 'leadingProperty': 'Unit', 'sortProperty': 'Unit', 'filterProperty': 'Unit'}"
+                        />
+                    </customData>
+                </Column>
+                <Column
+                    minScreenWidth="Desktop"
+                    demandPopin="true"
+                    hAlign="End"
+                >
+                    <Text text="{i18n>columnListPrice}" />
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'ListPrice', 'columnIndex': '6', 'leadingProperty': 'ListPrice', 'sortProperty': 'ListPrice', 'filterProperty': 'ListPrice'}"
+                        />
+                    </customData>
+                </Column>
+                <Column
+                    minScreenWidth="XXLarge"
+                    demandPopin="true"
+                    hAlign="End"
+                >
+                    <Text text="{i18n>columnRebateAmount}" />
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'RebateAmount', 'columnIndex': '7', 'leadingProperty': 'RebateAmount', 'sortProperty': 'RebateAmount', 'filterProperty': 'RebateAmount'}"
+                        />
+                    </customData>
+                </Column>
+                <Column
+                    minScreenWidth="XXLarge"
+                    demandPopin="true"
+                    hAlign="End"
+                >
+                    <Text text="{i18n>columnNetPrice}" />
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'NetPrice', 'columnIndex': '8', 'leadingProperty': 'NetPrice', 'sortProperty': 'NetPrice', 'filterProperty': 'NetPrice'}"
+                        />
+                    </customData>
+                </Column>
+                <Column
+                    minScreenWidth="1600px"
+                    demandPopin="true"
+                >
+                    <Text text="{i18n>columnValidFrom}" />
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'ValidFrom', 'columnIndex': '9', 'leadingProperty': 'ValidFrom', 'sortProperty': 'ValidFrom', 'filterProperty': 'ValidFrom'}"
+                        />
+                    </customData>
+                </Column>
+                <Column
+                    minScreenWidth="1600px"
+                    demandPopin="true"
+                >
+                    <Text text="{i18n>columnValidTo}" />
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'ValidTo', 'columnIndex': '10', 'leadingProperty': 'ValidTo', 'sortProperty': 'ValidTo', 'filterProperty': 'ValidTo'}"
+                        />
+                    </customData>
+                </Column>
+                <Column
+                    minScreenWidth="1600px"
+                    demandPopin="true"
+                >
+                    <Text text="{i18n>columnStatus}" />
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'Status', 'columnIndex': '11', 'leadingProperty': 'Status', 'sortProperty': 'Status', 'filterProperty': 'Status'}"
+                        />
+                    </customData>
+                </Column>
+                <Column
+                    minScreenWidth="1600px"
+                    demandPopin="true"
+                    hAlign="End"
+                >
+                    <Text text="{i18n>columnEndUserPrice}" />
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'EndUserPrice', 'columnIndex': '12', 'leadingProperty': 'EndUserPrice', 'sortProperty': 'EndUserPrice', 'filterProperty': 'EndUserPrice'}"
+                        />
+                    </customData>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier
+                            title="{CustomerDescription}"
+                            text="{CustomerID}"
+                        />
+                        <Text text="{RebateID}" />
+                        <ObjectIdentifier
+                            title="{EndUserDescription}"
+                            text="{EndUserID}"
+                        />
+                        <ObjectIdentifier
+                            title="{MaterialDescription}"
+                            text="{MaterialID}"
+                        />
+                        <Text text="{Unit}" />
+                        <Text
+                            text="{
+                                parts: ['ListPrice','Currency'],
+                                type: 'sap.ui.model.type.Currency'
+                            }"
+                        />
+                        <Text
+                            text="{
+                                parts: ['RebateAmount','Currency'],
+                                type: 'sap.ui.model.type.Currency'
+                            }"
+                        />
+                        <Text
+                            text="{
+                                parts: ['NetPrice','Currency'],
+                                type: 'sap.ui.model.type.Currency'
+                            }"
+                        />
+                        <Text
+                            text="{
+                                path: 'ValidFrom',
+                                type: 'sap.ui.model.type.Date',
+                                formatOptions: {
+                                    pattern: 'yyyy/MM/dd', UTC:true
+                                }
+                            }"
+                        />
+                        <Text
+                            text="{
+                                path: 'ValidTo',
+                                type: 'sap.ui.model.type.Date',
+                                formatOptions: {
+                                    pattern: 'yyyy/MM/dd', UTC:true
+                                }
+                            }"
+                        />
+                        <ObjectStatus
+                            text="{Status}"
+                            state="{ parts: [ { path: 'Status' }], formatter: '.GetStatusState' }"
+                        />
+                        <Text
+                            text="{
+                                parts: ['EndUserPrice','Currency'],
+                                type: 'sap.ui.model.type.Currency'
+                            }"
+                        />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </smartTable:SmartTable>
+</core:FragmentDefinition>

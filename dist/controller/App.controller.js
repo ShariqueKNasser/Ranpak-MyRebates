@@ -1,0 +1,2 @@
+sap.ui.define(["ranpak/wz/rebatelist/controller/BaseController"],function(e){"use strict";return e.extend("ranpak.wz.rebatelist.controller.App",{onInit:function(){}})});
+//# sourceMappingURL=App.controller.js.map

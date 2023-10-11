@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/mvc/Controller"],function(e){"use strict";return e.extend("ranpak.wz.rebatelist.controller.BaseController",{fetchDate:function(e){const t=e.getTimezoneOffset()*6e4;const n=new Date(e.getTime()-t);return n}})});
+//# sourceMappingURL=BaseController.js.map
