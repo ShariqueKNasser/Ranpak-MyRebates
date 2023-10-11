@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="CatalogService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="ZC_MyMachines" EntityType="CatalogService.ZC_MyMachines" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="My Machines"/>
+                <EntitySet Name="ZC_MyOrders" EntityType="CatalogService.ZC_MyOrders" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="My Machines"/>
+                <EntitySet Name="ZC_MyOrderItems" EntityType="CatalogService.ZC_MyOrderItems" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="My Order Items"/>
+                <EntitySet Name="ZC_MyRebates" EntityType="CatalogService.ZC_MyRebates" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="My Rebates"/>
+                <EntitySet Name="ZC_RP_UserFee_Invoices" EntityType="CatalogService.ZC_RP_UserFee_Invoices" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Invoices"/>
+                <EntitySet Name="ZC_RP_USERFEE_INVOICE_DET" EntityType="CatalogService.ZC_RP_USERFEE_INVOICE_DET" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Userfee Invoice details"/>
+                <EntitySet Name="ZC_Get_Branch" EntityType="CatalogService.ZC_Get_Branch" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Get branch for all parents"/>
+                <EntitySet Name="ZC_MyCreditDebitBillTo" EntityType="CatalogService.ZC_MyCreditDebitBillTo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Credit Debit Bill To"/>
+                <EntitySet Name="ZC_MyInvoicesBillTo" EntityType="CatalogService.ZC_MyInvoicesBillTo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Invoices Bill To"/>
+                <EntitySet Name="ZC_Branch_Det" EntityType="CatalogService.ZC_Branch_Det" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Branch Details"/>
+                <EntitySet Name="ZC_Materials" EntityType="CatalogService.ZC_Materials" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Get Materials for Sales Org of BP"/>
+                <EntitySet Name="ZC_MyMachinesCustomers" EntityType="CatalogService.ZC_MyMachinesCustomers" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="My Machines Customers"/>
+                <EntitySet Name="ZC_MyMachinesLocations" EntityType="CatalogService.ZC_MyMachinesLocations" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="My Machines Locations"/>
+                <EntitySet Name="ZC_MyMachinesMachines" EntityType="CatalogService.ZC_MyMachinesMachines" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="My Machines Machines"/>
+                <EntitySet Name="ZC_MyOrdersShipTo" EntityType="CatalogService.ZC_MyOrdersShipTo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="My Orders SHip To"/>
+                <EntitySet Name="ZC_MyOrdersSoldTo" EntityType="CatalogService.ZC_MyOrdersSoldTo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="My Orders Sold To"/>
+                <EntitySet Name="ZC_MyOrdersWarehouses" EntityType="CatalogService.ZC_MyOrdersWarehouses" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="My Orders Warehouses"/>
+                <EntitySet Name="ZC_MyRebatesCustomers" EntityType="CatalogService.ZC_MyRebatesCustomers" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="My Rebates Customers"/>
+                <EntitySet Name="ZC_MyUserFeeBillTo" EntityType="CatalogService.ZC_MyUserFeeBillTo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Invoices Bill To"/>
+                <EntitySet Name="ZC_Req_Order_Pricing" EntityType="CatalogService.ZC_Req_Order_Pricing" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Request Order Pricing data"/>
+                <EntitySet Name="ZC_RP_CREDITDEBIT" EntityType="CatalogService.ZC_RP_CREDITDEBIT" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Credit Debit"/>
+                <EntitySet Name="ZC_RP_CREDITDEBIT_DET" EntityType="CatalogService.ZC_RP_CREDITDEBIT_DET" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Credit Debit Details"/>
+                <EntitySet Name="ZC_RP_INVOICE_DETAILS" EntityType="CatalogService.ZC_RP_INVOICE_DETAILS" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Invoice details"/>
+                <EntitySet Name="ZC_RP_INVOICES" EntityType="CatalogService.ZC_RP_INVOICES" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Invoices"/>
+                <EntitySet Name="ZC_RP_RebCrdt_Memo" EntityType="CatalogService.ZC_RP_RebCrdt_Memo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Get Rebate Credit Memo Information"/>
+                <EntitySet Name="ZC_RP_RebCrdt_Memo_Det" EntityType="CatalogService.ZC_RP_RebCrdt_Memo_Det" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Rebate Credit Memo Details"/>
+                <EntitySet Name="ZC_RP_RebCrdtBillTo" EntityType="CatalogService.ZC_RP_RebCrdtBillTo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Get Rebate Credit Memo Information"/>
+                <EntitySet Name="ZC_MyEndUsers" EntityType="CatalogService.ZC_MyEndUsers" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Get End Users"/>
+                <EntitySet Name="ZC_MyBranches" EntityType="CatalogService.ZC_MyBranches" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Get Branch Data"/>
+                <EntitySet Name="ZI_Partners" EntityType="CatalogService.ZI_Partners" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Shipto Party details"/>
+                <EntitySet Name="ZC_BPLocation" EntityType="CatalogService.ZC_BPLocation" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Get Location for BP"/>
+                <EntitySet Name="ZI_MARM" EntityType="CatalogService.ZI_MARM" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Get Alternative UOM for a Material"/>
+                <EntitySet Name="ZC_MyRebatesEndUsers" EntityType="CatalogService.ZC_MyRebatesEndUsers" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="My Rebates EndUsers"/>
+                <EntitySet Name="ZC_MYREBATESMATERIALS" EntityType="CatalogService.ZC_MYREBATESMATERIALS" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Get Materials for Sales Org of BP"/>
+                <EntitySet Name="ZC_REQ_ORDER_PRICING_EU" EntityType="CatalogService.ZC_REQ_ORDER_PRICING_EU" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:label="Request Order Pricing data"/>
+                <EntitySet Name="Tickets" EntityType="CatalogService.Tickets"/>
+                <EntitySet Name="UserDetail" EntityType="CatalogService.UserDetail"/>
+                <AssociationSet Name="ZC_Branch_Det_to_shpto" Association="CatalogService.ZC_Branch_Det_to_shpto">
+                    <End Role="ZC_Branch_Det" EntitySet="ZC_Branch_Det"/>
+                    <End Role="ZI_Partners" EntitySet="ZI_Partners"/>
+                </AssociationSet>
+                <AssociationSet Name="ZC_Materials_to_altuom" Association="CatalogService.ZC_Materials_to_altuom">
+                    <End Role="ZC_Materials" EntitySet="ZC_Materials"/>
+                    <End Role="ZI_MARM" EntitySet="ZI_MARM"/>
+                </AssociationSet>
+            </EntityContainer>
+            <EntityType Name="ZC_MyMachines" sap:content-version="1" sap:label="My Machines">
+                <Key>
+                    <PropertyRef Name="CustomerID"/>
+                    <PropertyRef Name="EquipmentNumber"/>
+                </Key>
+                <Property Name="CustomerID" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="Customer ID"/>
+                <Property Name="EquipmentNumber" Type="Edm.String" MaxLength="18" Nullable="false" sap:display-format="UpperCase" sap:label="Equipment #" sap:quickinfo="Equipment Number"/>
+                <Property Name="EquipmentObjectNumber" Type="Edm.String" MaxLength="22" sap:display-format="UpperCase" sap:label="Object number"/>
+                <Property Name="EquipmentDescription" Type="Edm.String" MaxLength="40" sap:label="Machine Description" sap:quickinfo="Material description"/>
+                <Property Name="CustomerDescription" Type="Edm.String" MaxLength="35" sap:label="Customer Description" sap:quickinfo="Name 1"/>
+                <Property Name="SerialNumber" Type="Edm.String" MaxLength="18" sap:label="Serial Number"/>
+                <Property Name="LegacySerialNumber" Type="Edm.String" MaxLength="30" sap:display-format="UpperCase" sap:label="Legacy Serial Number" sap:quickinfo="Manufacturer serial number"/>
+                <Property Name="LocationID" Type="Edm.String" MaxLength="12" sap:label="Location ID"/>
+                <Property Name="LocationDescription" Type="Edm.String" MaxLength="35" sap:label="Location Name" sap:quickinfo="Name 1"/>
+                <Property Name="Address" Type="Edm.String" MaxLength="89" sap:label="Address"/>
+                <Property Name="LocationStreet" Type="Edm.String" MaxLength="35" sap:label="Street" sap:quickinfo="Street and House Number"/>
+                <Property Name="LocationCity" Type="Edm.String" MaxLength="35" sap:label="City"/>
+                <Property Name="LocationStateProvinceRegion" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Region/State/Province" sap:quickinfo="Region (State, Province, County)"/>
+                <Property Name="LocationZipPostalCode" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Postal Code"/>
+                <Property Name="SalesOrder" Type="Edm.String" MaxLength="1000" sap:label="Sales Order"/>
+                <Property Name="CustomerPONumber" Type="Edm.String" MaxLength="1000" sap:label="Customer PO Number"/>
+                <Property Name="InstallationDate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Installation Date" sap:quickinfo="Date of Last Goods Movement"/>
+                <Property Name="UserFee" Type="Edm.String" MaxLength="8" sap:label="User Fee"/>
+                <Property Name="userfeetype" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Item category" sap:quickinfo="Sales document item category"/>
+                <Property Name="StandardUserFee" Type="Edm.Decimal" Scale="2" Precision="11" sap:label="Standard Fee"/>
+                <Property Name="DeviatedAmount" Type="Edm.Decimal" Scale="2" Precision="11" sap:label="Deviated Amount"/>
+                <Property Name="CurrentUserFee" Type="Edm.Decimal" Scale="2" Precision="11" sap:label="Current User Fee"/>
+                <Property Name="Currency" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:quickinfo="Currency Key" sap:semantics="currency-code"/>
+                <Property Name="MachineType" Type="Edm.String" MaxLength="20" sap:label="Profit Center Name" sap:quickinfo="Description of Profit Center"/>
+                <Property Name="VerificationDate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Acquisition date"/>
+            </EntityType>
+            <EntityType Name="ZC_MyOrders" sap:content-version="1" sap:label="My Machines">
+                <Key>
+                    <PropertyRef Name="WorkzoneUserBPID"/>
+                    <PropertyRef Name="SalesOrderNumber"/>
+                    <PropertyRef Name="ShipToPartyID"/>
+                    <PropertyRef Name="SoldToPartyID"/>
+                </Key>
+                <Property Name="WorkzoneUserBPID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Workzone User BP" sap:quickinfo="Sold-To Party"/>
+                <Property Name="SalesOrderNumber" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="Sales Order Number"/>
+                <Property Name="ShipToPartyID" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="Ship To Party ID"/>
+                <Property Name="SoldToPartyID" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="Sold To Party ID"/>
+                <Property Name="ShipToPartyDescription" Type="Edm.String" MaxLength="35" sap:label="Ship To Party Description" sap:quickinfo="Name 1"/>
+                <Property Name="SoldToPartyDescription" Type="Edm.String" MaxLength="35" sap:label="Sold To Party Description" sap:quickinfo="Name 1"/>
+                <Property Name="CustomerPONumberID" Type="Edm.String" MaxLength="20" sap:label="Customer PO Number" sap:quickinfo="Customer Reference"/>
+                <Property Name="CustomerPONumberIDUpper" Type="Edm.String" MaxLength="20"/>
+                <Property Name="OrderType" Type="Edm.String" MaxLength="13" sap:label="Order Type"/>
+                <Property Name="OrderStatus" Type="Edm.String" MaxLength="11" sap:label="Order Status"/>
+                <Property Name="ReadyDate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Ready Date"/>
+                <Property Name="InvoiceStatus" Type="Edm.String" MaxLength="3" sap:label="Invoice Status"/>
+                <Property Name="Warehouse" Type="Edm.String" MaxLength="30" sap:label="Warehouse" sap:quickinfo="Description"/>
+                <Property Name="ShipToPartyStreet" Type="Edm.String" MaxLength="35" sap:label="Ship To Party Street" sap:quickinfo="Street and House Number"/>
+                <Property Name="ShipToPartyCity" Type="Edm.String" MaxLength="35" sap:label="Ship To Party City" sap:quickinfo="City"/>
+                <Property Name="ShipToPartyStateProvinceRegion" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Ship To Party State Province Region" sap:quickinfo="Region (State, Province, County)"/>
+                <Property Name="ShipToPartyZipPostalCode" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Ship To Party Zip Postcal Code" sap:quickinfo="Postal Code"/>
+                <Property Name="CreationDate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Created on" sap:quickinfo="Date on which the record was created"/>
+            </EntityType>
+            <EntityType Name="ZC_MyOrderItems" sap:content-version="1" sap:label="My Order Items">
+                <Key>
+                    <PropertyRef Name="SalesOrderID"/>
+                    <PropertyRef Name="Item"/>
+                    <PropertyRef Name="SalesOrderNumber"/>
+                </Key>
+                <Property Name="SalesOrderID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Sales document" sap:quickinfo="Sales Document"/>
+                <Property Name="Item" Type="Edm.String" MaxLength="6" Nullable="false" sap:display-format="NonNegative" sap:label="Sales Document Item"/>
+                <Property Name="SalesOrderNumber" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="Sales Order Number"/>
+                <Property Name="MaterialID" Type="Edm.String" MaxLength="40" sap:label="Material ID"/>
+                <Property Name="MaterialDescription" Type="Edm.String" MaxLength="40" sap:label="Material Description" sap:quickinfo="Material description"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Scale="3" Precision="15" sap:label="Quantity" sap:quickinfo="Cumulative order quantity in sales units"/>
+                <Property Name="UOM" Type="Edm.String" MaxLength="3" sap:label="UOM" sap:quickinfo="Sales unit" sap:semantics="unit-of-measure"/>
+                <Property Name="ListPrice" Type="Edm.Decimal" Scale="9" Precision="24" sap:label="List Price" sap:quickinfo="Condition Amount or Percentage"/>
+                <Property Name="EndUserID" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="End User ID" sap:quickinfo="Customer Number"/>
+                <Property Name="EndUserDescription" Type="Edm.String" MaxLength="35" sap:label="End User Description" sap:quickinfo="Name 1"/>
+                <Property Name="RebateAmount" Type="Edm.Decimal" Scale="2" Precision="11" sap:label="Rebate Amount"/>
+                <Property Name="TotalWeight" Type="Edm.Decimal" Scale="3" Precision="15" sap:label="Total Weight" sap:quickinfo="Gross Weight of the Item"/>
+                <Property Name="TotalWeightUnit" Type="Edm.String" MaxLength="3" sap:label="Total Weight Unit" sap:quickinfo="Weight Unit" sap:semantics="unit-of-measure"/>
+                <Property Name="TotalAmount" Type="Edm.Decimal" Scale="2" Precision="11" sap:label="Total Amount"/>
+                <Property Name="TotalAmountCurrency" Type="Edm.String" MaxLength="5" sap:label="Total Amount Currency" sap:quickinfo="SD document currency" sap:semantics="currency-code"/>
+                <Property Name="knumh" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="No.cond.rec. batch" sap:quickinfo="Number of condition record from batch determination"/>
+            </EntityType>
+            <EntityType Name="ZC_MyRebates" sap:content-version="1" sap:label="My Rebates">
+                <Key>
+                    <PropertyRef Name="BusinessPartnerID"/>
+                    <PropertyRef Name="RebateID"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="BusinessPartnerID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="RebateID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Condition Record No." sap:quickinfo="Number of the Condition Record"/>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false" sap:label="INT4" sap:quickinfo="4 Byte Signed Integer"/>
+                <Property Name="CustomerID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="CustomerDescription" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+                <Property Name="EndUserID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="EndUserDescription" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+                <Property Name="MaterialID" Type="Edm.String" MaxLength="40"/>
+                <Property Name="MaterialDescription" Type="Edm.String" MaxLength="40" sap:label="Material description"/>
+                <Property Name="Unit" Type="Edm.String" MaxLength="3" sap:label="Unit of Measure" sap:quickinfo="Condition Unit" sap:semantics="unit-of-measure"/>
+                <Property Name="ListPrice" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="RebateAmount" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="NetPrice" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="ValidFrom" Type="Edm.DateTime" sap:display-format="Date" sap:label="Date"/>
+                <Property Name="ValidTo" Type="Edm.DateTime" sap:display-format="Date" sap:label="Date"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="20"/>
+                <Property Name="EndUserPrice" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="Currency" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:quickinfo="Currency Key" sap:semantics="currency-code"/>
+            </EntityType>
+            <EntityType Name="ZC_RP_UserFee_Invoices" sap:content-version="1" sap:label="Invoices">
+                <Key>
+                    <PropertyRef Name="WorkzoneUserBPID"/>
+                    <PropertyRef Name="DocumentNo"/>
+                </Key>
+                <Property Name="WorkzoneUserBPID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Workzone User BP" sap:quickinfo="Payer"/>
+                <Property Name="DocumentNo" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Document Number" sap:quickinfo="Billing Document"/>
+                <Property Name="BillToParty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Bill To Party ID" sap:quickinfo="Customer Number"/>
+                <Property Name="BillToPartyDesc" Type="Edm.String" MaxLength="35" sap:label="Bill To Party Description" sap:quickinfo="Name 1"/>
+                <Property Name="BillDate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Date" sap:quickinfo="Billing Date"/>
+                <Property Name="ContractStartDate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Contract Start Date"/>
+                <Property Name="UserFeePeriod" Type="Edm.DateTime" sap:display-format="Date" sap:label="User Fee Period"/>
+                <Property Name="TotalAmount" Type="Edm.Decimal" Scale="2" Precision="11" sap:label="Total Amount"/>
+                <Property Name="DaysPastDueAgeing" Type="Edm.Int32"/>
+                <Property Name="AmountCurrency" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:quickinfo="SD document currency" sap:semantics="currency-code"/>
+                <Property Name="InvoiceItem" Type="Edm.String" MaxLength="6" sap:display-format="NonNegative" sap:label="Item" sap:quickinfo="Billing Item"/>
+                <Property Name="DaysExpired" Type="Edm.Int32"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="14"/>
+                <Property Name="FormattedUserFeePeriod" Type="Edm.String" MaxLength="6"/>
+            </EntityType>
+            <EntityType Name="ZC_RP_USERFEE_INVOICE_DET" sap:content-version="1" sap:label="Userfee Invoice details">
+                <Key>
+                    <PropertyRef Name="DocumentNo"/>
+                    <PropertyRef Name="ItemNo"/>
+                    <PropertyRef Name="ContractNumber"/>
+                </Key>
+                <Property Name="DocumentNo" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Billing Document"/>
+                <Property Name="ItemNo" Type="Edm.String" MaxLength="6" Nullable="false" sap:display-format="NonNegative" sap:label="Item" sap:quickinfo="Billing Item"/>
+                <Property Name="ContractNumber" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Sales document" sap:quickinfo="Sales Document"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="40" sap:label="Item Description" sap:quickinfo="Short text for sales order item"/>
+                <Property Name="Item" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="NewSerialNumber" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Equipment" sap:quickinfo="Equipment Number"/>
+                <Property Name="LegacySerialNumber" Type="Edm.String" MaxLength="30" sap:display-format="UpperCase" sap:label="ManufSerialNumber" sap:quickinfo="Manufacturer serial number"/>
+                <Property Name="Id" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Partner"/>
+                <Property Name="Name" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+                <Property Name="Street" Type="Edm.String" MaxLength="35" sap:label="Street" sap:quickinfo="Street and House Number"/>
+                <Property Name="City" Type="Edm.String" MaxLength="35" sap:label="City"/>
+                <Property Name="Region" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Region" sap:quickinfo="Region (State, Province, County)"/>
+                <Property Name="Country" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Country" sap:quickinfo="Country Key"/>
+                <Property Name="Shipdate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Date L.GoodsMvt" sap:quickinfo="Date of Last Goods Movement"/>
+                <Property Name="StandardUserFee" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="DeviatedAmount" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="Currentuserfee" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="PeriodAmount" Type="Edm.Decimal" Scale="3" Precision="16" sap:label="Net Value" sap:quickinfo="Net value of the billing item in document currency"/>
+                <Property Name="waers" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:quickinfo="Currency Key" sap:semantics="currency-code"/>
+                <Property Name="DemoMachine" Type="Edm.String" MaxLength="3"/>
+            </EntityType>
+            <EntityType Name="ZC_Get_Branch" sap:content-version="1" sap:label="Get branch for all parents">
+                <Key>
+                    <PropertyRef Name="ParentId"/>
+                </Key>
+                <Property Name="ParentId" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+            </EntityType>
+            <EntityType Name="ZC_MyCreditDebitBillTo" sap:content-version="1" sap:label="Credit Debit Bill To">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+            </EntityType>
+            <EntityType Name="ZC_MyInvoicesBillTo" sap:content-version="1" sap:label="Invoices Bill To">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+            </EntityType>
+            <EntityType Name="ZC_Branch_Det" sap:content-version="1" sap:label="Branch Details">
+                <Key>
+                    <PropertyRef Name="BranchPartner"/>
+                </Key>
+                <Property Name="BranchPartner" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <NavigationProperty Name="to_shpto" Relationship="CatalogService.ZC_Branch_Det_to_shpto" FromRole="ZC_Branch_Det" ToRole="ZI_Partners"/>
+            </EntityType>
+            <EntityType Name="ZC_Materials" sap:content-version="1" sap:label="Get Materials for Sales Org of BP">
+                <Key>
+                    <PropertyRef Name="BusinessPartnerID"/>
+                    <PropertyRef Name="SalesOrganisation"/>
+                    <PropertyRef Name="MaterialID"/>
+                </Key>
+                <Property Name="BusinessPartnerID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="SalesOrganisation" Type="Edm.String" MaxLength="4" Nullable="false" sap:display-format="UpperCase" sap:label="Sales Organization"/>
+                <Property Name="MaterialID" Type="Edm.String" MaxLength="40" Nullable="false" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="MaterialDescription" Type="Edm.String" MaxLength="40" sap:label="Material description"/>
+                <Property Name="MaterialGroup" Type="Edm.String" MaxLength="9" sap:display-format="UpperCase" sap:label="Material Group"/>
+                <Property Name="Weight" Type="Edm.Decimal" Scale="3" Precision="13" sap:label="Gross weight"/>
+                <Property Name="WeightUOM" Type="Edm.String" MaxLength="3" sap:label="Weight unit" sap:quickinfo="Weight Unit" sap:semantics="unit-of-measure"/>
+                <Property Name="BaseUOM" Type="Edm.String" MaxLength="3" sap:label="Base Unit of Measure" sap:semantics="unit-of-measure"/>
+                <NavigationProperty Name="to_altuom" Relationship="CatalogService.ZC_Materials_to_altuom" FromRole="ZC_Materials" ToRole="ZI_MARM"/>
+            </EntityType>
+            <EntityType Name="ZC_MyMachinesCustomers" sap:content-version="1" sap:label="My Machines Customers">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="Customer ID"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="35" sap:label="Customer Description" sap:quickinfo="Name 1"/>
+            </EntityType>
+            <EntityType Name="ZC_MyMachinesLocations" sap:content-version="1" sap:label="My Machines Locations">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="12" Nullable="false" sap:label="Location ID"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="35" sap:label="Location Name" sap:quickinfo="Name 1"/>
+            </EntityType>
+            <EntityType Name="ZC_MyMachinesMachines" sap:content-version="1" sap:label="My Machines Machines">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="40" Nullable="false" sap:label="Machine Description" sap:quickinfo="Material description"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="40" sap:label="Material description"/>
+            </EntityType>
+            <EntityType Name="ZC_MyOrdersShipTo" sap:content-version="1" sap:label="My Orders SHip To">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="Ship To Party ID"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="35" sap:label="Ship To Party Description" sap:quickinfo="Name 1"/>
+            </EntityType>
+            <EntityType Name="ZC_MyOrdersSoldTo" sap:content-version="1" sap:label="My Orders Sold To">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="Sold To Party ID"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="35" sap:label="Sold To Party Description" sap:quickinfo="Name 1"/>
+            </EntityType>
+            <EntityType Name="ZC_MyOrdersWarehouses" sap:content-version="1" sap:label="My Orders Warehouses">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="4" Nullable="false" sap:display-format="UpperCase" sap:label="Shipping Point" sap:quickinfo="Shipping Point / Receiving Point"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="30" sap:label="Warehouse" sap:quickinfo="Description"/>
+            </EntityType>
+            <EntityType Name="ZC_MyRebatesCustomers" sap:content-version="1" sap:label="My Rebates Customers">
+                <Key>
+                    <PropertyRef Name="CustomerID"/>
+                </Key>
+                <Property Name="CustomerID" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="Customer ID"/>
+                <Property Name="CustomerDescription" Type="Edm.String" MaxLength="35" sap:label="Customer Description" sap:quickinfo="Name 1"/>
+            </EntityType>
+            <EntityType Name="ZC_MyUserFeeBillTo" sap:content-version="1" sap:label="Invoices Bill To">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Bill To Party ID" sap:quickinfo="Customer Number"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="35" sap:label="Bill To Party Description" sap:quickinfo="Name 1"/>
+            </EntityType>
+            <EntityType Name="ZC_Req_Order_Pricing" sap:content-version="1" sap:label="Request Order Pricing data">
+                <Key>
+                    <PropertyRef Name="WorkzoneUserBPID"/>
+                    <PropertyRef Name="MaterialID"/>
+                    <PropertyRef Name="SalesOrganisation"/>
+                </Key>
+                <Property Name="WorkzoneUserBPID" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="MaterialID" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="SalesOrganisation" Type="Edm.String" MaxLength="4" Nullable="false" sap:display-format="UpperCase" sap:label="Sales Organization"/>
+                <Property Name="Distributor" Type="Edm.Byte"/>
+                <Property Name="ShipToParty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Ship-to party"/>
+                <Property Name="ListPrice" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="Type" Type="Edm.String" MaxLength="7"/>
+                <Property Name="RebateAmount" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="Currency" Type="Edm.String" MaxLength="5"/>
+            </EntityType>
+            <EntityType Name="ZC_RP_CREDITDEBIT" sap:content-version="1" sap:label="Credit Debit">
+                <Key>
+                    <PropertyRef Name="DocumentNo"/>
+                </Key>
+                <Property Name="DocumentNo" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Billing Document"/>
+                <Property Name="SoldToParty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Sold-To Party"/>
+                <Property Name="BillToParty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="BillToPartyDesc" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+                <Property Name="CreationDate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Created on" sap:quickinfo="Date on which the record was created"/>
+                <Property Name="AmountCurrency" Type="Edm.String" MaxLength="5" sap:label="Document Currency" sap:quickinfo="SD document currency" sap:semantics="currency-code"/>
+                <Property Name="Type" Type="Edm.String" MaxLength="6"/>
+                <Property Name="TotalAmount" Type="Edm.String" MaxLength="13"/>
+                <Property Name="SalesOrders" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="PurchaseOrders" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="PurchaseOrdersUpper" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="OriginalInvoice" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="UserFeePeriod" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="FormattedUserFeePeriod" Type="Edm.String" MaxLength="6"/>
+            </EntityType>
+            <EntityType Name="ZC_RP_CREDITDEBIT_DET" sap:content-version="1" sap:label="Credit Debit Details">
+                <Key>
+                    <PropertyRef Name="DocumentNo"/>
+                    <PropertyRef Name="ItemNo"/>
+                </Key>
+                <Property Name="DocumentNo" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Billing Document"/>
+                <Property Name="ItemNo" Type="Edm.String" MaxLength="6" Nullable="false" sap:display-format="NonNegative" sap:label="Item" sap:quickinfo="Billing Item"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="40" sap:label="Item Description" sap:quickinfo="Short text for sales order item"/>
+                <Property Name="MaterialNo" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Scale="3" Precision="13" sap:label="Billed Quantity" sap:quickinfo="Actual billed quantity"/>
+                <Property Name="Uom" Type="Edm.String" MaxLength="3" sap:label="Sales unit" sap:semantics="unit-of-measure"/>
+                <Property Name="TotalAmount" Type="Edm.String" MaxLength="13"/>
+                <Property Name="Currency" Type="Edm.String" MaxLength="5" sap:label="Document Currency" sap:quickinfo="SD document currency" sap:semantics="currency-code"/>
+                <Property Name="ListPrice" Type="Edm.Decimal" Scale="2" Precision="11"/>
+            </EntityType>
+            <EntityType Name="ZC_RP_INVOICE_DETAILS" sap:content-version="1" sap:label="Invoice details">
+                <Key>
+                    <PropertyRef Name="DocumentNo"/>
+                    <PropertyRef Name="ItemNo"/>
+                </Key>
+                <Property Name="DocumentNo" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Billing Document"/>
+                <Property Name="ItemNo" Type="Edm.String" MaxLength="6" Nullable="false" sap:display-format="NonNegative" sap:label="Item" sap:quickinfo="Billing Item"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="40" sap:label="Item Description" sap:quickinfo="Short text for sales order item"/>
+                <Property Name="MaterialNo" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Scale="3" Precision="13" sap:label="Billed Quantity" sap:quickinfo="Actual billed quantity"/>
+                <Property Name="Uom" Type="Edm.String" MaxLength="3" sap:label="Sales unit" sap:semantics="unit-of-measure"/>
+                <Property Name="TotalAmount" Type="Edm.Decimal" Scale="2" Precision="11"/>
+            </EntityType>
+            <EntityType Name="ZC_RP_INVOICES" sap:content-version="1" sap:label="Invoices">
+                <Key>
+                    <PropertyRef Name="DocumentNo"/>
+                </Key>
+                <Property Name="DocumentNo" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Billing Document"/>
+                <Property Name="BillToParty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="BillToPartyDesc" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+                <Property Name="BillDate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Billing Date"/>
+                <Property Name="TotalAmount" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="Payments" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="BalanceDue" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="14"/>
+                <Property Name="DaysPastDueAgeing" Type="Edm.Int32"/>
+                <Property Name="AmountCurrency" Type="Edm.String" MaxLength="5" sap:label="Document Currency" sap:quickinfo="SD document currency" sap:semantics="currency-code"/>
+                <Property Name="SalesOrders" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="PurchaseOrders" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="PurchaseOrdersUpper" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="Currency" Type="Edm.String" MaxLength="5" sap:label="Document Currency" sap:quickinfo="SD document currency" sap:semantics="currency-code"/>
+                <Property Name="Taxes" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="DueDate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Net Due Date"/>
+                <Property Name="BalancePaid" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="DaysExpired" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="ZC_RP_RebCrdt_Memo" sap:content-version="1" sap:label="Get Rebate Credit Memo Information">
+                <Key>
+                    <PropertyRef Name="DocumentNumber"/>
+                </Key>
+                <Property Name="DocumentNumber" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Billing Document"/>
+                <Property Name="RebateID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="BillToPartyID" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="BillToPartyDescription" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+                <Property Name="CreationDate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Created on" sap:quickinfo="Date on which the record was created"/>
+                <Property Name="Periods" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="Taxes" Type="Edm.String" MaxLength="13"/>
+                <Property Name="TotalAmount" Type="Edm.String" MaxLength="13"/>
+                <Property Name="AmountCurrency" Type="Edm.String" MaxLength="5" sap:label="Document Currency" sap:quickinfo="SD document currency" sap:semantics="currency-code"/>
+            </EntityType>
+            <EntityType Name="ZC_RP_RebCrdt_Memo_Det" sap:content-version="1" sap:label="Rebate Credit Memo Details">
+                <Key>
+                    <PropertyRef Name="DocumentNumber"/>
+                    <PropertyRef Name="ItemNumber"/>
+                </Key>
+                <Property Name="DocumentNumber" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Billing Document"/>
+                <Property Name="ItemNumber" Type="Edm.String" MaxLength="6" Nullable="false" sap:display-format="NonNegative" sap:label="Item" sap:quickinfo="Billing Item"/>
+                <Property Name="RebateID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="Period" Type="Edm.DateTime" sap:display-format="Date" sap:label="Pricing Date" sap:quickinfo="Date for Pricing and Exchange Rate"/>
+                <Property Name="EndUserID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="EndUserDescription" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+                <Property Name="ItemDescription" Type="Edm.String" MaxLength="40" sap:label="Item Description" sap:quickinfo="Short text for sales order item"/>
+                <Property Name="ItemID" Type="Edm.String" MaxLength="40"/>
+                <Property Name="LastShipDate" Type="Edm.DateTime" sap:display-format="Date" sap:label="Pricing Date" sap:quickinfo="Date for Pricing and Exchange Rate"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Scale="3" Precision="13" sap:label="Billed Quantity" sap:quickinfo="Actual billed quantity"/>
+                <Property Name="Uom" Type="Edm.String" MaxLength="3" sap:label="Sales unit" sap:semantics="unit-of-measure"/>
+                <Property Name="RebateAmount" Type="Edm.String" MaxLength="13"/>
+                <Property Name="TotalAmount" Type="Edm.String" MaxLength="13"/>
+                <Property Name="Currency" Type="Edm.String" MaxLength="5" sap:label="Document Currency" sap:quickinfo="SD document currency" sap:semantics="currency-code"/>
+            </EntityType>
+            <EntityType Name="ZC_RP_RebCrdtBillTo" sap:content-version="1" sap:label="Get Rebate Credit Memo Information">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="Description" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+            </EntityType>
+            <EntityType Name="ZC_MyEndUsers" sap:content-version="1" sap:label="Get End Users">
+                <Key>
+                    <PropertyRef Name="BusinessPartnerID"/>
+                    <PropertyRef Name="EndUserID"/>
+                </Key>
+                <Property Name="BusinessPartnerID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer number of business partner"/>
+                <Property Name="EndUserID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="EndUserDescription" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+            </EntityType>
+            <EntityType Name="ZC_MyBranches" sap:content-version="1" sap:label="Get Branch Data">
+                <Key>
+                    <PropertyRef Name="BusinessPartnerID"/>
+                    <PropertyRef Name="SalesOrganization"/>
+                </Key>
+                <Property Name="BusinessPartnerID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="SalesOrganization" Type="Edm.String" MaxLength="4" Nullable="false" sap:display-format="UpperCase" sap:label="Sales Organization"/>
+                <Property Name="BusinessPartnerDescription" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+                <Property Name="SalesOrganizationDescription" Type="Edm.String" MaxLength="20" sap:label="Name"/>
+            </EntityType>
+            <EntityType Name="ZI_Partners" sap:content-version="1" sap:label="Shipto Party details">
+                <Key>
+                    <PropertyRef Name="BusinessPartnerId"/>
+                    <PropertyRef Name="PartnerId"/>
+                </Key>
+                <Property Name="BusinessPartnerId" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="PartnerId" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer number of business partner"/>
+                <Property Name="PartnerFunction" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Partner Function"/>
+                <Property Name="PartnerDescription" Type="Edm.String" MaxLength="35" sap:label="Name" sap:quickinfo="Name 1"/>
+            </EntityType>
+            <EntityType Name="ZC_BPLocation" sap:content-version="1" sap:label="Get Location for BP">
+                <Key>
+                    <PropertyRef Name="BusinessPartnerID"/>
+                </Key>
+                <Property Name="BusinessPartnerID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="AddressLine1" Type="Edm.String" MaxLength="35" sap:label="Street" sap:quickinfo="Street and House Number"/>
+                <Property Name="AddressLine2" Type="Edm.String" MaxLength="1"/>
+                <Property Name="City" Type="Edm.String" MaxLength="35" sap:label="City"/>
+                <Property Name="StateProvinceRegion" Type="Edm.String" MaxLength="20" sap:label="Description"/>
+                <Property Name="ZipPostalCode" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Postal Code"/>
+                <Property Name="Country" Type="Edm.String" MaxLength="15" sap:label="Name" sap:quickinfo="Country Name"/>
+            </EntityType>
+            <EntityType Name="ZI_MARM" sap:content-version="1" sap:label="Get Alternative UOM for a Material">
+                <Key>
+                    <PropertyRef Name="MaterialID"/>
+                    <PropertyRef Name="AlternativeUOM"/>
+                </Key>
+                <Property Name="MaterialID" Type="Edm.String" MaxLength="40" Nullable="false" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="AlternativeUOM" Type="Edm.String" MaxLength="3" Nullable="false" sap:label="AlternativeUnit" sap:quickinfo="Alternative Unit of Measure for Stockkeeping Unit" sap:semantics="unit-of-measure"/>
+                <Property Name="ConversionNumerator" Type="Edm.Decimal" Scale="0" Precision="5" sap:label="Numerator" sap:quickinfo="Numerator for Conversion to Base Units of Measure"/>
+                <Property Name="ConversionDenominator" Type="Edm.Decimal" Scale="0" Precision="5" sap:label="Denominator" sap:quickinfo="Denominator for conversion to base units of measure"/>
+                <Property Name="isBaseUOM" Type="Edm.String" MaxLength="5"/>
+            </EntityType>
+            <EntityType Name="ZC_MyRebatesEndUsers" sap:content-version="1" sap:label="My Rebates EndUsers">
+                <Key>
+                    <PropertyRef Name="EndUserID"/>
+                </Key>
+                <Property Name="EndUserID" Type="Edm.String" MaxLength="10" Nullable="false" sap:label="EndUser ID"/>
+                <Property Name="EndUserDescription" Type="Edm.String" MaxLength="35" sap:label="EndUser Description" sap:quickinfo="Name 1"/>
+            </EntityType>
+            <EntityType Name="ZC_MYREBATESMATERIALS" sap:content-version="1" sap:label="Get Materials for Sales Org of BP">
+                <Key>
+                    <PropertyRef Name="BusinessPartnerID"/>
+                    <PropertyRef Name="SalesOrganisation"/>
+                    <PropertyRef Name="MaterialID"/>
+                </Key>
+                <Property Name="BusinessPartnerID" Type="Edm.String" MaxLength="10" Nullable="false" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer Number"/>
+                <Property Name="SalesOrganisation" Type="Edm.String" MaxLength="4" Nullable="false" sap:display-format="UpperCase" sap:label="Sales Organization"/>
+                <Property Name="MaterialID" Type="Edm.String" MaxLength="40" Nullable="false" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="MaterialDescription" Type="Edm.String" MaxLength="40" sap:label="Material description"/>
+                <Property Name="MaterialGroup" Type="Edm.String" MaxLength="9" sap:display-format="UpperCase" sap:label="Material Group"/>
+                <Property Name="Weight" Type="Edm.Decimal" Scale="3" Precision="13" sap:label="Gross weight"/>
+                <Property Name="WeightUOM" Type="Edm.String" MaxLength="3" sap:label="Weight unit" sap:quickinfo="Weight Unit" sap:semantics="unit-of-measure"/>
+                <Property Name="BaseUOM" Type="Edm.String" MaxLength="3" sap:label="Base Unit of Measure" sap:semantics="unit-of-measure"/>
+            </EntityType>
+            <EntityType Name="ZC_REQ_ORDER_PRICING_EU" sap:content-version="1" sap:label="Request Order Pricing data">
+                <Key>
+                    <PropertyRef Name="WorkzoneUserBPID"/>
+                    <PropertyRef Name="MaterialID"/>
+                    <PropertyRef Name="SalesOrganisation"/>
+                </Key>
+                <Property Name="WorkzoneUserBPID" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="MaterialID" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="SalesOrganisation" Type="Edm.String" MaxLength="4" Nullable="false" sap:display-format="UpperCase" sap:label="Sales Organization"/>
+                <Property Name="Distributor" Type="Edm.Byte"/>
+                <Property Name="EndUser" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="End User Customer"/>
+                <Property Name="ListPrice" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="Type" Type="Edm.String" MaxLength="7"/>
+                <Property Name="RebateAmount" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="Currency" Type="Edm.String" MaxLength="5"/>
+            </EntityType>
+            <EntityType Name="Tickets">
+                <Property Name="description" Type="Edm.String" MaxLength="1000000"/>
+                <Property Name="subject" Type="Edm.String" MaxLength="100"/>
+                <Property Name="email" Type="Edm.String" MaxLength="50"/>
+                <Property Name="priority" Type="Edm.Int32"/>
+                <Property Name="status" Type="Edm.Int32"/>
+                <Property Name="group_id" Type="Edm.Int64"/>
+                <Property Name="cc_emails" Type="Collection(Edm.String)" MaxLength="50" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="UserDetail">
+                <Property Name="user_profile_id" Type="Edm.String" MaxLength="100"/>
+                <Property Name="isRebateUser" Type="Edm.Boolean"/>
+            </EntityType>
+            <Association Name="ZC_Branch_Det_to_shpto">
+                <End Role="ZC_Branch_Det" Type="CatalogService.ZC_Branch_Det" Multiplicity="*"/>
+                <End Role="ZI_Partners" Type="CatalogService.ZI_Partners" Multiplicity="*"/>
+            </Association>
+            <Association Name="ZC_Materials_to_altuom">
+                <End Role="ZC_Materials" Type="CatalogService.ZC_Materials" Multiplicity="*"/>
+                <End Role="ZI_MARM" Type="CatalogService.ZI_MARM" Multiplicity="*"/>
+            </Association>
+            <Annotations Target="CatalogService.EntityContainer/ZC_MyMachines" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

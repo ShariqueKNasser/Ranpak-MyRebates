@@ -1,0 +1,103 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common" />
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI" />
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication" />
+    </edmx:Reference>
+    <edmx:Reference Uri="/Workzone/$metadata">
+        <edmx:Include Namespace="CatalogService" Alias="SAP" />
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local1">
+            <Annotations Target="CatalogService.ZC_MyRebates/BusinessPartnerID">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="Common.Label" String="Customer" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/RebateID">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="Common.Label" String="Rebate ID" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/ID">
+                <Annotation Term="Common.Label" String="ID" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/CustomerID">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="Common.Label" String="Customer ID" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/CustomerDescription">
+                <Annotation Term="Common.Label" String="Customer Description" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/EndUserID">
+                <Annotation Term="Common.Label" String="End User ID" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/EndUserDescription">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="UI.Hidden" />
+                <Annotation Term="Common.Label" String="End User Description" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/MaterialID">
+                <Annotation Term="Common.Label" String="Material ID" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/MaterialDescription">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="Common.Label" String="Material Description" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/Unit">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="Common.Label" String="Unit" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/ListPrice">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="Common.Label" String="List Price" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/RebateAmount">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="Common.Label" String="Rebate Amount" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/NetPrice">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="Common.Label" String="Net Price" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/ValidFrom">
+                <Annotation Term="Common.Label" String="Valid From" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/ValidTo">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="Common.Label" String="Valid To" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/Status">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="Common.Label" String="Status" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/EndUserPrice">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="Common.Label" String="End User Price" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+            <Annotations Target="CatalogService.ZC_MyRebates/Currency">
+                <Annotation Term="UI.HiddenFilter" />
+                <Annotation Term="Common.Label" String="Currency" />
+                <Annotation Term="UI.Hidden" />
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

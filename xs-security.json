@@ -1,0 +1,35 @@
+{
+  "xsappname": "ranpakwzrebatelist",
+  "tenant-mode": "dedicated",
+  "description": "Security profile of called application",
+  "scopes": [
+    {
+      "name": "uaa.user",
+      "description": "UAA"
+    },
+    {
+      "name": "uaa.myrebates",
+      "description": "My Rebates Role"
+    },
+    {
+      "name": "$XSAPPNAME.Display",
+      "description": "display"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Token_Exchange",
+      "description": "UAA",
+      "scope-references": [
+        "uaa.user"
+      ]
+    },
+    {
+      "name": "MR_MY_REBATES_FE_ROLE",
+      "description": "My Rebates Role",
+      "scope-references": [
+        "uaa.myrebates"
+      ]
+    }
+  ]
+}
