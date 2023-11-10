@@ -6,7 +6,6 @@ sap.ui.define([
     return BaseController.extend("ranpak.wz.rebatelist.controller.App", {
         onInit: function () {
 
-            
         }
     });
 });
