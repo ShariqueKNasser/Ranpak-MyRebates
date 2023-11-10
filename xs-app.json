@@ -3,6 +3,13 @@
   "authenticationMethod": "route",
   "routes": [
     {
+      "source": "^/sap/opu/(.*)$",
+      "target": "/sap/opu/$1",
+      "destination": "backend",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
       "source": "^/Workzone/(.*)$",
       "target": "/Workzone/$1",
       "destination": "RANPACKWZ_CAP",

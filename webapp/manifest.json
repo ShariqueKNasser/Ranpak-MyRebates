@@ -41,6 +41,14 @@
                 "settings": {
                     "localUri": "annotations/annotation0.xml"
                 }
+            },
+            "oMyRebatesPost_alias": {
+                "uri": "sap/opu/odata/sap/ZOTC_ERROR_MESSGAES_SRV",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
+                }
             }
         }
     },
@@ -102,6 +110,11 @@
                 "type": "sap.ui.model.json.JSONModel",
                 "settings": {},
                 "preload": false
+            },
+            "oPOSTMdl": {
+                "dataSource": "oMyRebatesPost_alias",
+                "type": "sap.ui.model.odata.v2.ODataModel",
+                "preload": true
             }
         },
         "resources": {

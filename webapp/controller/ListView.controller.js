@@ -22,6 +22,80 @@ sap.ui.define([
                 return new Token({ key: text, text: text });
             };
             this.byId("inputRebateID").addValidator(fnValidator);
+
+
+            var oPayload = {
+                "file_name": "8287",
+                "dummytoexcelset": [
+                    {
+                        "Rebate_ID": "0000008287",
+                        "Sales_Organization": "1201",
+                        "Distributor_No": "30000007",
+                        "Distributor_Name": "",
+                        "End_User_No": "30000020",
+                        "End_user_Name": "",
+                        "End_User_City": "",
+                        "End_user_State": "",
+                        "Your_Sales_Office": "",
+                        "Your_Sales_Office_Name": "",
+                        "Your_Item": "",
+                        "Your_Item_Description": "",
+                        "Ranpak_Item": "10000008",
+                        "End_User_Invoice": "123456",
+                        "End_User_Ship_Date": "2023-07-01",
+                        "col16": " ",
+                        "col17": " ",
+                        "Resale_Price": "0.00",
+                        "List_Price": "4200.00",
+                        "Rebate_Amount": "15.00",
+                        "Net_Price": "4215.00",
+                        "Quantity": "10",
+                        "UOM": "PC",
+                        "Customer_Reference": "TEST MyRanpak"
+                    },
+                    {
+                        "Rebate_ID": "0000008288",
+                        "Sales_Organization": "1201",
+                        "Distributor_No": "30000007",
+                        "Distributor_Name": "",
+                        "End_User_No": "30000021",
+                        "End_user_Name": "",
+                        "End_User_City": "",
+                        "End_user_State": "",
+                        "Your_Sales_Office": "",
+                        "Your_Sales_Office_Name": "",
+                        "Your_Item": "",
+                        "Your_Item_Description": "",
+                        "Ranpak_Item": "10000008",
+                        "End_User_Invoice": "123457",
+                        "End_User_Ship_Date": "2023-07-02",
+                        "col16": " ",
+                        "col17": " ",
+                        "Resale_Price": "0.00",
+                        "List_Price": "0.00",
+                        "Rebate_Amount": "-5.00",
+                        "Net_Price": "0.00",
+                        "Quantity": "10",
+                        "UOM": "PC",
+                        "Customer_Reference": "TEST MyRanpak"
+                    }
+                ],
+                "dummytomessageset": [
+                    {
+                        "file_name": "",
+                        "Messages": ""
+                    }
+                ]
+            };
+            var oPOSTMdl = this.getOwnerComponent().getModel("oPOSTMdl");
+            oPOSTMdl.create("/dummyheaderSet", oPayload, {
+                success: function (oEvent) {
+                    debugger;
+                },
+                error: function (oEvent) {
+                    debugger;
+                }
+            });
         },
 
         onFilterClear: function (oEvent) {

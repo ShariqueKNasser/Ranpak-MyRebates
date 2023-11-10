@@ -19,6 +19,9 @@ server:
           - path: /Workzone
             url: https://ranpak-workzone-dev-dev-ranpakworkzoneportal-srv.cfapps.us21.hana.ondemand.com
             destination: RANPACKWZ_CAP
+          - path: /sap/opu
+            url: http://vhrnpds4ci.hec.ranpak.com:44300
+            destination: backend
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
