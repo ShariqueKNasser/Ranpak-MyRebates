@@ -9,7 +9,7 @@
         id="idMyRebatesTbl"
         smartFilterId="idMyRebatesFB"
         tableType="Table"
-        editable="false"
+        editable="true"
         entitySet="ZC_MyRebates"
         useVariantManagement="true"
         useTablePersonalisation="true"
@@ -24,7 +24,7 @@
         class="sapUiTinyMarginTop"
         header="{i18n>title}"
     >
-        <Table growing="true" sticky="ColumnHeaders,HeaderToolbar">
+        <Table growing="true" sticky="ColumnHeaders,HeaderToolbar" mode="MultiSelect">
             <columns>
                 <Column width="13rem">
                     <Text text="{i18n>columnCustomer}" />
@@ -174,6 +174,45 @@
                         />
                     </customData>
                 </Column>
+                <Column
+                    minScreenWidth="1600px"
+                    demandPopin="true"
+                    hAlign="End"
+                >
+                   <Label text="{i18n>columnEndUserInvoice}"/>
+                <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'EndUserInvoice', 'columnIndex': '13', 'leadingProperty': 'EndUserInvoice', 'sortProperty': 'EndUserInvoice', 'filterProperty': 'EndUserInvoice'}"
+                        />
+                    </customData>
+                </Column>
+                <Column
+                    minScreenWidth="1600px"
+                    demandPopin="true"
+                    hAlign="End" 
+                >
+                    <Label text="{i18n>colunmEndUserShipDate}"/>
+                     <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'EndUserShipDate', 'columnIndex': '14', 'leadingProperty': 'EndUserShipDate', 'sortProperty': 'EndUserShipDate', 'filterProperty': 'EndUserShipDate'}"
+                        />
+                    </customData>
+                </Column>
+                <Column
+                    minScreenWidth="1600px"
+                    demandPopin="true"
+                    hAlign="End"  
+                >
+                    <Label text="{i18n>colunmQuantity}"/>
+                     <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{'columnKey': 'Quantity', 'columnIndex': '15', 'leadingProperty': 'Quantity', 'sortProperty': 'Quantity', 'filterProperty': 'Quantity'}"
+                        />
+                    </customData>
+                </Column>
             </columns>
             <items>
                 <ColumnListItem>
@@ -238,9 +277,13 @@
                                 type: 'sap.ui.model.type.Currency'
                             }"
                         />
+                        <Input value="{Invoice}" />
+                        <DatePicker value="{ShipDate}" />
+                        <Input value="{Quantity}" />
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
+       
     </smartTable:SmartTable>
 </core:FragmentDefinition>

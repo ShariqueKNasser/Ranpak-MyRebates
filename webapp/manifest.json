@@ -115,7 +115,10 @@
                 "dataSource": "oMyRebatesPost_alias",
                 "type": "sap.ui.model.odata.v2.ODataModel",
                 "preload": true
-            }
+            },
+            "newData":{
+                "type": "sap.ui.model.json.JSONModel"
+              }
         },
         "resources": {
             "css": [
