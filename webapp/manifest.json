@@ -81,7 +81,7 @@
             "id": "App"
         },
         "dependencies": {
-            "minUI5Version": "1.114.0",
+            "minUI5Version": "1.120.1",
             "libs": {
                 "sap.ui.core": {},
                 "sap.m": {},
@@ -118,9 +118,6 @@
                 "type": "sap.ui.model.json.JSONModel"
             },
             "oBlkUpldMdl": {
-                "type": "sap.ui.model.json.JSONModel"
-            },
-            "oTblColHdrMdl": {
                 "type": "sap.ui.model.json.JSONModel"
             }
         },

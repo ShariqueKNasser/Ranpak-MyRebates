@@ -16,6 +16,7 @@
             <Wizard
                 id="idBlkRbtClmWiz"
                 showNextButton="false"
+                class="wizCls"
             >
                 <WizardStep
                     id="idDwnldTmpltWizStp"
@@ -134,20 +135,22 @@
                 </WizardStep>
             </Wizard>
         </content>
-        <beginButton>
-            <Button
-                text="{i18n>CANCEL}"
-                press="onBlkCncl"
-            />
-        </beginButton>
-        <endButton>
-            <Button
-                id="idBlkSubmitBtn"
-                text="{i18n>SUBMIT_CLAIM}"
-                press="onBlkSubmit"
-                type="Emphasized"
-                enabled="false"
-            />
-        </endButton>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button
+                    text="{i18n>CANCEL}"
+                    press="onBlkCncl"
+                />
+                <Button
+                    id="idBlkSubmitBtn"
+                    text="{i18n>SUBMIT_CLAIM}"
+                    press="onBlkSubmit"
+                    type="Emphasized"
+                    enabled="false"
+                    class="sapUiSmallMarginBeginEnd"
+                />
+            </Toolbar>
+        </footer>
     </Dialog>
 </core:FragmentDefinition>
