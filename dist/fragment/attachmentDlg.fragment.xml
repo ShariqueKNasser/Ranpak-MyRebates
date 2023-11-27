@@ -1,0 +1,85 @@
+<core:FragmentDefinition
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:ui="sap.ui.unified"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+>
+    <Dialog
+        id="idAttachmentDlg"
+        title="{i18n>UPLOAD_ATTACHMENTS}"
+        class="sapUiContentPadding"
+    >
+        <content>
+            <VBox>
+                <items>
+                    <HBox
+                        alignItems="End"
+                        justifyContent="End"
+                    >
+                        <Text
+                            text="{i18n>ATTACHMENT_UPLD_DESC}"
+                            class="infoFontCls"
+                        />
+                    </HBox>
+                    <ui:FileUploader
+                        buttonOnly="true"
+                        buttonText="{i18n>UPLOAD_DOC}"
+                        sameFilenameAllowed="true"
+                        tooltip="{i18n>UPLOAD_DOC}"
+                        change="onAttachmentUpload"
+                        style="Emphasized"
+                        multiple="true"
+                        icon="sap-icon://upload"
+                    />
+                    <Table
+                        items="{oAttachmentMdl>/results}"
+                        class="sapUiSmallMarginTop"
+                    >
+                        <columns>
+                            <Column>
+                                <Text text="{i18n>FILE_NAME}" />
+                            </Column>
+                            <Column>
+                                <Text text="{i18n>FILE_TYPE}" />
+                            </Column>
+                            <Column>
+                                <Text text="{i18n>FILE_SIZE}" />
+                            </Column>
+                            <Column />
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{oAttachmentMdl>fileName}" />
+                                    <Text text="{oAttachmentMdl>fileType}" />
+                                    <Text text="{oAttachmentMdl>fileSize}" />
+                                    <Button
+                                        type="Transparent"
+                                        icon="sap-icon://delete"
+                                        press="onAttachmentDel"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </items>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button
+                text="{i18n>CANCEL}"
+                press="onClmWithDocCncl"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                id="idSubmitWithDocBtn"
+                text="{i18n>SUBMIT_CLAIM}"
+                press="onSubmitClmWithDoc"
+                type="Emphasized"
+                enabled="false"
+            />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

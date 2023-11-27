@@ -10,7 +10,7 @@
     xmlns:smartVariantManagement="sap.ui.comp.smartvariants"
     xmlns:f="sap.f"
 >
-    <f:DynamicPage headerExpanded="true">
+    <f:DynamicPage id="idMyRebatesPg" headerExpanded="true" showFooter="false">
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
@@ -37,5 +37,15 @@
                 type="XML"
             />
         </f:content>
+        <f:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button
+                    text="{i18n>SUBMIT_CLAIM}"
+                    press="onSubmitClm"
+                    type="Emphasized"
+                />
+            </OverflowToolbar>
+        </f:footer>
     </f:DynamicPage>
 </mvc:View>

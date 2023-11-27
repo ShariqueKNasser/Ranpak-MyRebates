@@ -2,8 +2,14 @@ sap.ui.define([
     "ranpak/wz/rebatelist/controller/BaseController",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/m/Token"
-], function (BaseController, Filter, FilterOperator, Token) {
+    "sap/m/Token",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox",
+    "sap/ui/core/Fragment",
+    "sap/m/BusyDialog",
+    "sap/ui/table/Column",
+    "sap/m/Text"
+], function (BaseController, Filter, FilterOperator, Token, MessageToast, MessageBox, Fragment, BusyDialog, Column, Text) {
     "use strict";
 
     return BaseController.extend("ranpak.wz.rebatelist.controller.ListView", {
@@ -14,8 +20,16 @@ sap.ui.define([
         },
 
         _handleRouteMatched: function (oEvent) {
+            this.oBusyDialog = new BusyDialog();
             this.oI18n = this.getView().getModel("i18n").getResourceBundle();
+            this.oUserEditMdl = this.getOwnerComponent().getModel("oUserEditMdl");
+            this.oBlkUpldMdl = this.getOwnerComponent().getModel("oBlkUpldMdl");
             this.oFiltrKeys = ["RebateID", "ValidTo", "CustomerID", "EndUserID", "MaterialID", "Status"];
+            this.oClmSbmsnDt = [];
+
+            var oAttachmentMdl = this.getOwnerComponent().getModel("oAttachmentMdl");
+            oAttachmentMdl.setProperty("/results", []);
+            oAttachmentMdl.refresh(true);
 
             const fnValidator = function (args) {
                 const text = args.text;
@@ -23,79 +37,11 @@ sap.ui.define([
             };
             this.byId("inputRebateID").addValidator(fnValidator);
 
-
-            var oPayload = {
-                "file_name": "8287",
-                "dummytoexcelset": [
-                    {
-                        "Rebate_ID": "0000008287",
-                        "Sales_Organization": "1201",
-                        "Distributor_No": "30000007",
-                        "Distributor_Name": "",
-                        "End_User_No": "30000020",
-                        "End_user_Name": "",
-                        "End_User_City": "",
-                        "End_user_State": "",
-                        "Your_Sales_Office": "",
-                        "Your_Sales_Office_Name": "",
-                        "Your_Item": "",
-                        "Your_Item_Description": "",
-                        "Ranpak_Item": "10000008",
-                        "End_User_Invoice": "123456",
-                        "End_User_Ship_Date": "2023-07-01",
-                        "col16": " ",
-                        "col17": " ",
-                        "Resale_Price": "0.00",
-                        "List_Price": "4200.00",
-                        "Rebate_Amount": "15.00",
-                        "Net_Price": "4215.00",
-                        "Quantity": "10",
-                        "UOM": "PC",
-                        "Customer_Reference": "TEST MyRanpak"
-                    },
-                    {
-                        "Rebate_ID": "0000008288",
-                        "Sales_Organization": "1201",
-                        "Distributor_No": "30000007",
-                        "Distributor_Name": "",
-                        "End_User_No": "30000021",
-                        "End_user_Name": "",
-                        "End_User_City": "",
-                        "End_user_State": "",
-                        "Your_Sales_Office": "",
-                        "Your_Sales_Office_Name": "",
-                        "Your_Item": "",
-                        "Your_Item_Description": "",
-                        "Ranpak_Item": "10000008",
-                        "End_User_Invoice": "123457",
-                        "End_User_Ship_Date": "2023-07-02",
-                        "col16": " ",
-                        "col17": " ",
-                        "Resale_Price": "0.00",
-                        "List_Price": "0.00",
-                        "Rebate_Amount": "-5.00",
-                        "Net_Price": "0.00",
-                        "Quantity": "10",
-                        "UOM": "PC",
-                        "Customer_Reference": "TEST MyRanpak"
-                    }
-                ],
-                "dummytomessageset": [
-                    {
-                        "file_name": "",
-                        "Messages": ""
-                    }
-                ]
-            };
-            var oPOSTMdl = this.getOwnerComponent().getModel("oPOSTMdl");
-            oPOSTMdl.create("/dummyheaderSet", oPayload, {
-                success: function (oEvent) {
-                    debugger;
-                },
-                error: function (oEvent) {
-                    debugger;
-                }
-            });
+            //SET MAX AND MIN DATE FOR THE SHIP DATE
+            var oCurrDt = new Date();
+            var oPriorDate = new Date(new Date().setDate(oCurrDt.getDate() - 60));
+            (this.oUserEditMdl).setProperty("/maxDate", new Date());
+            (this.oUserEditMdl).setProperty("/minDate", oPriorDate);
         },
 
         onFilterClear: function (oEvent) {
@@ -113,6 +59,11 @@ sap.ui.define([
                     oFiltrCntrl.setSelectedKeys([]);
                 }
             }
+
+            var oMyRebatesPg = this.getView().byId("idMyRebatesPg");
+            var oMyRebatesTbl = this.getView().byId("idMyRebatesTbl");
+            var oSlctdItmList = oMyRebatesTbl.getTable().getSelectedItems();
+            this.onTblMutliDSlct(oMyRebatesPg, oSlctdItmList);
             oFiltrBar.fireSearch();
         },
 
@@ -338,6 +289,527 @@ sap.ui.define([
             if (sStatus === oI18n.getText("filterStatusExpired")) {
                 return "Error";
             }
+        },
+
+        onTblMutliDSlct: function (oMyRebatesPg, oSlctdItmList, fromFilter) {
+            var oSlctdItmListCells,
+                oCellCustomDt;
+            for (var j = 0; j < oSlctdItmList.length; j++) {
+                oSlctdItmList[j].setSelected(false);
+                oSlctdItmListCells = oSlctdItmList[j].getCells();
+                for (var k = 0; k < oSlctdItmListCells.length; k++) {
+                    oCellCustomDt = oSlctdItmListCells[k].getCustomData();
+                    if (oCellCustomDt.length > 0) {
+                        if (oCellCustomDt[0].getKey() === "INVOICE_NO" || oCellCustomDt[0].getKey() === "SHIP_DATE" || oCellCustomDt[0].getKey() === "QUANTITY_SOLD") {
+                            oSlctdItmListCells[k].setVisible(false);
+                        }
+                    }
+                }
+            }
+            oMyRebatesPg.setShowFooter(false);
+            this.oClmSbmsnDt = [];
+            (this.oUserEditMdl).setProperty("/claimSubmissionData", this.oClmSbmsnDt);
+            (this.oUserEditMdl).refresh(true);
+        },
+
+        onTblItmSnglSlctn: function (oSlctdItm, oSlctdItmCells, oSlctdItmStatus, isItmSlctd, oMyRebatesTblSlctdItms, oMyRebatesPg) {
+            var oCellCustomDt;
+            if (oSlctdItmStatus === "Expired") {
+                //ITEM WITH EXPIRED STATUS SHOULD NOT BE ALLOWED TO SELECT
+                MessageToast.show((this.oI18n).getText("INVALID_ITEM_SELECT"));
+                oSlctdItm.setSelected(false);
+            } else {
+                for (var i = 0; i < oSlctdItmCells.length; i++) {
+                    oCellCustomDt = oSlctdItmCells[i].getCustomData();
+                    if (oCellCustomDt.length > 0) {
+                        if (oCellCustomDt[0].getKey() === "INVOICE_NO" || oCellCustomDt[0].getKey() === "SHIP_DATE" || oCellCustomDt[0].getKey() === "QUANTITY_SOLD") {
+                            if (isItmSlctd) {
+                                oSlctdItmCells[i].setVisible(true);
+                            } else {
+                                oSlctdItmCells[i].setVisible(false);
+                            }
+                        }
+                    }
+                }
+                if (oMyRebatesTblSlctdItms.length === 0) {
+                    oMyRebatesPg.setShowFooter(false);
+                } else {
+                    if (!oMyRebatesPg.getShowFooter()) {
+                        oMyRebatesPg.setShowFooter(true);
+                    }
+                }
+            }
+        },
+
+        onTblItmSlct: function (oEvent) {
+            var oMyRebatesPg = this.getView().byId("idMyRebatesPg");
+            var oSlctdItmList = oEvent.getParameter("listItems");
+
+            //FOR TABLE MULTI DE-SELECT
+            if (oSlctdItmList.length > 1) {
+                this.onTblMutliDSlct(oMyRebatesPg, oSlctdItmList);
+            } else {
+                //FOR TABLE ITEM SINGLE SELECT/DE-SELECT
+                var oMyRebatesTbl = this.getView().byId("idMyRebatesTbl");
+                var oMyRebatesTblSlctdItms = oMyRebatesTbl.getTable().getSelectedItems();
+                var oSlctdItm = oEvent.getParameter("listItem");
+                var oSlctdItmCntxt = oSlctdItm.getBindingContext().getObject();
+                var oSlctdItmStatus = oSlctdItmCntxt.Status;
+                var oSlctdItmCells = oSlctdItm.getCells();
+                var isItmSlctd = oEvent.getParameter("selected");
+
+                this.onTblItmSnglSlctn(oSlctdItm, oSlctdItmCells, oSlctdItmStatus, isItmSlctd, oMyRebatesTblSlctdItms, oMyRebatesPg);
+                this.formClmSubmsnDt(oSlctdItmCntxt, isItmSlctd);
+            }
+        },
+
+        formClmSubmsnDt: function (oSlctdItmCntxt, isItmSlctd) {
+            oSlctdItmCntxt.End_User_Invoice = "";
+            oSlctdItmCntxt.End_User_Ship_Date = "";
+            oSlctdItmCntxt.Quantity = "";
+
+            if (isItmSlctd) {
+                (this.oClmSbmsnDt).push(oSlctdItmCntxt);
+            } else {
+                for (var i = 0; i < (this.oClmSbmsnDt).length; i++) {
+                    if (oSlctdItmCntxt.ID === (this.oClmSbmsnDt)[i].ID) {
+                        (this.oClmSbmsnDt).splice(i);
+                    }
+                }
+            }
+
+            (this.oUserEditMdl).setProperty("/claimSubmissionData", this.oClmSbmsnDt);
+            (this.oUserEditMdl).refresh(true);
+        },
+
+        onClmFldEdit: function (oEvent) {
+            var oCrntFld = oEvent.getSource().getCustomData()[0].getKey();
+            var oCntxt = oEvent.getSource().getBindingContext().getObject();
+
+            for (var i = 0; i < (this.oClmSbmsnDt).length; i++) {
+                if (oCntxt.ID === (this.oClmSbmsnDt)[i].ID) {
+                    if (oCrntFld === "INVOICE_NO") {
+                        var isValidInvoiceNo = this.validateAlphaNumFld(oEvent);
+                        if (isValidInvoiceNo) {
+                            oEvent.getSource().setValueState("None");
+                            (this.oClmSbmsnDt)[i].End_User_Invoice = oEvent.getSource().getValue();
+                        } else {
+                            MessageToast.show((this.oI18n).getText("INVALID_ENTRY"));
+                            oEvent.getSource().setValueState("Error");
+                            oEvent.getSource().setValue(null);
+                        }
+                    } else if (oCrntFld === "SHIP_DATE") {
+                        (this.oClmSbmsnDt)[i].End_User_Ship_Date = oEvent.getSource().getValue();
+                    } else if (oCrntFld === "QUANTITY_SOLD") {
+                        var isValidQtySld = this.validateNumberFld(oEvent);
+                        if (isValidQtySld) {
+                            oEvent.getSource().setValueState("None");
+                            (this.oClmSbmsnDt)[i].Quantity = oEvent.getSource().getValue();
+                        } else {
+                            MessageToast.show((this.oI18n).getText("INVALID_ENTRY"));
+                            oEvent.getSource().setValueState("Error");
+                            oEvent.getSource().setValue(null);
+                        }
+                    }
+                }
+            }
+            (this.oUserEditMdl).setProperty("/claimSubmissionData", this.oClmSbmsnDt);
+            (this.oUserEditMdl).refresh(true);
+        },
+
+        validatePayload: function () {
+            var oRtrnVal = 1;
+
+            //VALIDATE FIELDS
+            var oMyRebatesTbl = this.getView().byId("idMyRebatesTbl");
+            var oSlctdItems = oMyRebatesTbl.getTable().getSelectedItems();
+            var oSlctdListCells, oSlctCntrlCstmDt, oSlctCntrlCstmDtKey;
+            for (var i = 0; i < oSlctdItems.length; i++) {
+                oSlctdListCells = oSlctdItems[i].getCells();
+                for (var j = 0; j < oSlctdListCells.length; j++) {
+                    oSlctCntrlCstmDt = oSlctdListCells[j].getCustomData();
+                    if (oSlctCntrlCstmDt.length > 0) {
+                        oSlctCntrlCstmDtKey = oSlctCntrlCstmDt[0].getKey();
+                        if (oSlctCntrlCstmDtKey === "INVOICE_NO" || oSlctCntrlCstmDtKey === "SHIP_DATE" || oSlctCntrlCstmDtKey === "QUANTITY_SOLD") {
+                            if (!oSlctdListCells[j].getValue()) {
+                                oSlctdListCells[j].setValueState("Error");
+                                oRtrnVal = 0;
+                            } else {
+                                oSlctdListCells[j].setValueState("None");
+                            }
+                        }
+                    }
+                }
+            }
+
+            //MANDATORY SUPPORTING DOCUMENTS
+            if (oRtrnVal === 1) {
+                (this.oBusyDialog).open();
+                oRtrnVal = 2;
+                var oView = this.getView();
+                var that = this;
+                if (!this.byId("idAttachmentDlg")) {
+                    Fragment.load({
+                        id: oView.getId(),
+                        name: "ranpak.wz.rebatelist.fragment.attachmentDlg",
+                        controller: this
+                    }).then(function (oDialog) {
+                        oView.addDependent(oDialog);
+                        oDialog.open();
+                        oView.byId("idMyRebatesPg").setShowFooter(false);
+                        (that.oBusyDialog).close();
+                    });
+                } else {
+                    this.byId("idAttachmentDlg").open();
+                    this.byId("idMyRebatesPg").setShowFooter(false);
+                    (this.oBusyDialog).close();
+                }
+            }
+
+            return oRtrnVal;
+        },
+
+        onAttachmentUpload: function (oEvent) {
+            var oUploadedFiles = oEvent.getSource().oFileUpload.files;
+            var oAttachmentMdl = this.getOwnerComponent().getModel("oAttachmentMdl");
+            var oAttachmentsMdlDt = oAttachmentMdl.getProperty("/results");
+            this.formAttachments(oUploadedFiles, oAttachmentMdl, oAttachmentsMdlDt);
+        },
+
+        formAttachments: function (oUploadedFiles, oAttachmentMdl, oAttachmentsMdlDt) {
+            var oFileName = "",
+                oFileSize = "",
+                oFileSizeBytes = "",
+                oType = "",
+                oDocCount = 0;
+            for (var i = 0; i < oUploadedFiles.length; i++) {
+                oFileName = oUploadedFiles[i].name;
+                oFileSizeBytes = (oUploadedFiles[i].size);
+                oFileSize = (oUploadedFiles[i].size) / (1024 * 1024);
+                oFileSize = parseFloat(oFileSize.toFixed(2));
+                oType = oFileName.substring(oFileName.lastIndexOf('.') + 1, oFileName.length) || oFileName;
+                oType = oType.toUpperCase();
+                if (oType === "XLSX" || oType === "XLS" || oType === "CSV" || oType === "PNG" || oType === "JPEG" || oType === "JPG" || oType ===
+                    "PDF" || oType === "DOCX" || oType === "DOC" || oType === "TXT" || oType === "PPTX" || oType === "PPT" ||
+                    oType === "MSG" || oType === "EML") {
+                    for (var j = 0; j < oAttachmentsMdlDt.length; j++) {
+                        oDocCount += oAttachmentsMdlDt[j].FilesizeMB;
+                    }
+                    oDocCount += oFileSize;
+                    if (oDocCount > 50) {
+                        MessageToast.show((this.oI18n).getResourceBundle().getText("DOC_SIZE_ERROR"));
+                    } else {
+                        this.updateAttachmentsModel(oUploadedFiles[i], oAttachmentMdl, oAttachmentsMdlDt, oFileName, oFileSizeBytes, oFileSize,
+                            oType);
+                    }
+                } else {
+                    MessageToast.show((this.oI18n).getResourceBundle().getText("SUPPORTED_DOC"));
+                }
+            }
+        },
+
+        updateAttachmentsModel: function (oUploadedFiles, oAttachmentMdl, oAttachmentsMdlDt, oFileName, oFileSizeBytes, oFileSize,
+            oFileType) {
+            var that = this;
+            var oSubmitWithDocBtn = this.getView().byId("idSubmitWithDocBtn");
+            var oBlkSubmitBtn = this.getView().byId("idBlkSubmitBtn");
+            var reader = new FileReader();
+            reader.readAsDataURL(oUploadedFiles);
+            reader.onloadend = function (evt) {
+                if (evt.target.readyState === FileReader.DONE) {
+                    var s = evt.target.result;
+                    var base64 = s.split(",")[1];
+                    oAttachmentsMdlDt.push({
+                        "b64Content": base64,
+                        "fileName": oFileName,
+                        "fileSizeBytes": oFileSizeBytes,
+                        "fileSize": oFileSize + " MB",
+                        "fileType": oFileType
+                    });
+                    oAttachmentMdl.refresh(true);
+                    if (oSubmitWithDocBtn) {
+                        oSubmitWithDocBtn.setEnabled(true);
+                    }
+                    if (oBlkSubmitBtn) {
+                        oBlkSubmitBtn.setEnabled(true);
+                    }
+                }
+            };
+        },
+
+        onSubmitClm: function () {
+            var isValid = this.validatePayload();
+            if (isValid === 0) {
+                MessageBox.error((this.oI18n).getText("VALIDATE_PAYLOAD_ERR"));
+            }
+        },
+
+        onAttachmentDel: function (oEvent) {
+            var oAttachmentMdl = this.getOwnerComponent().getModel("oAttachmentMdl");
+            var oAttachmentMdlDt = oAttachmentMdl.getProperty("/results");
+            var oCntxt = oEvent.getSource().getBindingContext("oAttachmentMdl");
+            var oCntxtPath = oCntxt.getPath().split("/")[2];
+
+            oAttachmentMdlDt.splice(oCntxtPath, 1);
+            oAttachmentMdl.refresh(true);
+
+            if (oAttachmentMdlDt.length === 0) {
+                if (this.byId("idSubmitWithDocBtn")) {
+                    this.byId("idSubmitWithDocBtn").setEnabled(false);
+                }
+                if (this.byId("idBlkSubmitBtn")) {
+                    this.byId("idBlkSubmitBtn").setEnabled(false);
+                }
+            }
+        },
+
+        onSubmitClmWithDoc: function () {
+            this.triggerRebateClmSubmit();
+        },
+
+        triggerRebateClmSubmit: function () {
+            (this.oBusyDialog).open();
+            var that = this;
+            var oDataToPost = [];
+            var oRebateID = "", oStrLngth;
+            for (var i = 0; i < (this.oClmSbmsnDt).length; i++) {
+                oStrLngth = 10 - ((this.oClmSbmsnDt)[i].RebateID).length;
+                for (var j = 0; j < oStrLngth; j++) {
+                    oRebateID += "0";
+                }
+                oRebateID += (this.oClmSbmsnDt)[i].RebateID;
+                oDataToPost.push({
+                    "Rebate_ID": oRebateID,
+                    "Sales_Organization": "",
+                    "Distributor_No": (this.oClmSbmsnDt)[i].CustomerID,
+                    "Distributor_Name": (this.oClmSbmsnDt)[i].CustomerDescription,
+                    "End_User_No": (this.oClmSbmsnDt)[i].EndUserID,
+                    "End_user_Name": (this.oClmSbmsnDt)[i].EndUserDescription,
+                    "End_User_City": "",
+                    "End_user_State": "",
+                    "Your_Sales_Office": "",
+                    "Your_Sales_Office_Name": "",
+                    "Your_Item": "",
+                    "Your_Item_Description": "",
+                    "Ranpak_Item": (this.oClmSbmsnDt)[i].MaterialID,
+                    "End_User_Invoice": (this.oClmSbmsnDt)[i].End_User_Invoice,
+                    "End_User_Ship_Date": (this.oClmSbmsnDt)[i].End_User_Ship_Date,
+                    "col16": "",
+                    "col17": "",
+                    "Resale_Price": "",
+                    "List_Price": (this.oClmSbmsnDt)[i].ListPrice,
+                    "Rebate_Amount": (this.oClmSbmsnDt)[i].RebateAmount,
+                    "Net_Price": (this.oClmSbmsnDt)[i].NetPrice,
+                    "Quantity": (this.oClmSbmsnDt)[i].Quantity,
+                    "UOM": "Unit",
+                    "Customer_Reference": ""
+                });
+            };
+
+            var oFinalPayload = {
+                "file_name": "REBATE CLAIM SUBMISSION",
+                "dummytoexcelset": oDataToPost,
+                "dummytomessageset": []
+            };
+
+            debugger;
+            var oPOSTMdl = this.getOwnerComponent().getModel("oPOSTMdl");
+            oPOSTMdl.create("/dummyheaderSet", oFinalPayload, {
+                success: function (oEvent) {
+                    debugger;
+                    var oResponse = oEvent.dummytomessageset.results;
+                    var oResponseMsg = "", oResponseStatus = "", oFinalMsg = "", oRebateID = "", isStatusSuccess = 0;
+                    for (var j = 0; j < oResponse.length; j++) {
+                        oResponseStatus = oResponse[j].Message_Type;
+                        oResponseMsg = oResponse[j].Messages;
+
+                        if (oResponse.length === that.oClmSbmsnDt.length) {
+                            oRebateID = that.oClmSbmsnDt[j].Rebate_ID;
+                            if (oResponseMsg) {
+                                oResponseMsg = oResponseMsg.split(":")[1];
+                            }
+                            if (oResponseStatus === "E") {
+                                oFinalMsg += "\nRebate ID " + oRebateID + " : " + oResponseMsg;
+                            } else if (oResponseStatus === "S") {
+                                isStatusSuccess = 1;
+                                oFinalMsg += "\nRebate ID " + oRebateID + " : " + oResponseMsg;
+                                that.upldDocToSharePoint(oFinalMsg);
+                            }
+                        } else {
+                            if (oResponseStatus === "E") {
+                                oFinalMsg += "\n" + oResponseMsg;
+                            } else if (oResponseStatus === "S") {
+                                isStatusSuccess = 1;
+                                oFinalMsg += "\n" + oResponseMsg;
+                                that.upldDocToSharePoint(oFinalMsg);
+                            }
+                        }
+                    }
+                    if (isStatusSuccess === 0) {
+                        MessageBox.error(oFinalMsg);
+                    }
+                    (that.oBusyDialog).close();
+                },
+                error: function (oEvent) {
+                    debugger;
+                    (that.oBusyDialog).close();
+                    var oErrObj = JSON.parse(oEvent.responseText);
+                    MessageBox.error(oErrObj.error.message.value);
+                }
+            });
+        },
+
+        onClmWithDocCncl: function () {
+            this.byId("idAttachmentDlg").close();
+            this.byId("idMyRebatesPg").setShowFooter(true);
+        },
+
+        upldDocToSharePoint: function (oFinalMsg) {
+            (this.oBusyDialog).open();
+            var that = this;
+            var oAttachmentMdl = this.getOwnerComponent().getModel("oAttachmentMdl");
+            var oAttachmentMdlDt = oAttachmentMdl.getProperty("/results");
+            var oDocs = [];
+            for (var i = 0; i < oAttachmentMdlDt.length; i++) {
+                oDocs.push({
+                    "name": oAttachmentMdlDt[i].fileName,
+                    "content": oAttachmentMdlDt[i].b64Content
+                });
+            }
+            var oPayload = {
+                "customerId": (this.oClmSbmsnDt)[0].CustomerID,
+                "customerName": (this.oClmSbmsnDt)[0].CustomerDescription,
+                "rebateClaimNo": (this.oClmSbmsnDt)[0].RebateID,
+                "docs": oDocs
+            };
+            debugger;
+            var oSrvMdl = this.getOwnerComponent().getModel();
+            oSrvMdl.create("/UploadDocuments", oPayload, {
+                success: function (oEvent) {
+                    debugger;
+                    that.byId("idAttachmentDlg").close();
+                    (that.oBusyDialog).close();
+                    MessageBox.success(oFinalMsg + "\n" + "Supporting documents uploaded successfully");
+                },
+                error: function (oEvent) {
+                    that.byId("idAttachmentDlg").close();
+                    (that.oBusyDialog).close();
+                    var oErrObj = JSON.parse(oEvent.responseText);
+                    var oErr = oErrObj.error.message.value + ". " + (that.oI18n).getText("TRY_AGAIN");
+                    MessageBox.error(oFinalMsg + "\n" + oErr);
+                }
+            });
+        },
+
+        onBulkBtnPress: function () {
+            (this.oBusyDialog).open();
+            var oView = this.getView();
+            var that = this;
+            if (!this.byId("idBlkRbtClmDlg")) {
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "ranpak.wz.rebatelist.fragment.bulkRebateClaimWizard",
+                    controller: this
+                }).then(function (oDialog) {
+                    oView.addDependent(oDialog);
+                    oDialog.open();
+                    that.oBlkRbtClmWiz = oView.byId("idBlkRbtClmWiz");
+                    that.idDwnldTmpltWizStp = oView.byId("idDwnldTmpltWizStp");
+                    that.oUpldTmpltWizStp = oView.byId("idUpldTmpltWizStp");
+                    that.oReviewWizStp = oView.byId("idReviewWizStp");
+                    that.oAttachUpldWizStp = oView.byId("idAttachUpldWizStp");
+                    that.resetBlkClmWiz();
+                    (that.oBusyDialog).close();
+                });
+            } else {
+                this.byId("idBlkRbtClmDlg").open();
+                this.resetBlkClmWiz();
+                (this.oBusyDialog).close();
+            }
+        },
+
+        resetBlkClmWiz: function () {
+            (this.oBlkRbtClmWiz).setCurrentStep(this.idDwnldTmpltWizStp);
+
+            var oBlkSubmitBtn = this.getView().byId("idBlkSubmitBtn");
+            oBlkSubmitBtn.setEnabled(false);
+        },
+
+        onBlkCncl: function () {
+            this.resetBlkClmWiz();
+            this.byId("idBlkRbtClmDlg").close();
+        },
+
+        onDwnldTemplt: function () {
+            var oPath = this.getAppModulePath() + "/artifacts/Rebate-Claim-Template.xlsx";
+            sap.m.URLHelper.redirect(oPath, true);
+
+            (this.oBlkRbtClmWiz).setCurrentStep(this.oUpldTmpltWizStp);
+        },
+
+        onUpldTemplt: function (oEvent) {
+            var oUploadedFile = oEvent.getSource().oFileUpload.files[0];
+
+            this.oParseExcel(oUploadedFile);
+        },
+
+        oParseExcel: function (oUploadedFile) {
+            var that = this;
+
+            var oExcelDt = {},
+                oWS = "";
+            if (oUploadedFile && window.FileReader) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var data = e.target.result;
+                    var workbook = XLSX.read(data, {
+                        type: "binary"
+                    });
+                    workbook.SheetNames.forEach(function (sheetName) {
+                        oWS = workbook.Sheets[sheetName];
+                        oExcelDt = XLSX.utils.sheet_to_row_object_array(oWS);
+                    });
+
+                    if (oExcelDt.length > 0) {
+                        that.setExcelDtToTbl(oWS, oExcelDt);
+                        that.generateTable();
+                        (that.oBlkRbtClmWiz).setCurrentStep(that.oReviewWizStp);
+                        (that.oBlkRbtClmWiz).setCurrentStep(that.oAttachUpldWizStp);
+                    } else {
+                        MessageBox.error((that.oI18n).getText("UPLOAD_FILE_EMPTY"));
+                        (that.oBlkRbtClmWiz).setCurrentStep(that.oUpldTmpltWizStp);
+                    }
+                };
+                reader.readAsBinaryString(oUploadedFile);
+            }
+        },
+
+        setExcelDtToTbl: function (oWS, oExcelDt) {
+            const oTBlHdr = []
+            const columnCount = XLSX.utils.decode_range(oWS['!ref']).e.c + 1
+            for (let i = 0; i < columnCount; ++i) {
+                if (oWS[XLSX.utils.encode_col(i) + 1]) {
+                    oTBlHdr[i] = oWS[XLSX.utils.encode_col(i) + 1].v;
+                }
+            }
+            this.oBlkUpldMdl.setProperty("/columns", oTBlHdr);
+            this.oBlkUpldMdl.setProperty("/rows", oExcelDt);
+        },
+
+        generateTable: function () {
+            var oBlkUpldTbl = this.getView().byId("idBlkUpldTbl");
+            oBlkUpldTbl.bindColumns("oBlkUpldMdl>/columns", function (sId, oContext) {
+                var columnName = oContext.getObject();
+                return new Column({
+                    label: columnName,
+                    template: new Text({ "text": { path: "oBlkUpldMdl>" + columnName } }),
+                    width: "12rem",
+                    tooltip: columnName,
+                    sortProperty: columnName,
+                    filterProperty: columnName
+                });
+            });
+            oBlkUpldTbl.bindRows("oBlkUpldMdl>/rows");
         }
     });
 });

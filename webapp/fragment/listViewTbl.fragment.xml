@@ -24,7 +24,25 @@
         class="sapUiTinyMarginTop"
         header="{i18n>title}"
     >
-        <Table growing="true" sticky="ColumnHeaders,HeaderToolbar" mode="MultiSelect">
+        <smartTable:customToolbar>
+            <OverflowToolbar>
+                <content>
+                    <ToolbarSpacer />
+                    <Button
+                        type="Emphasized"
+                        press="onBulkBtnPress"
+                        text="{i18n>BULK_CLAIM_SUBMISSION}"
+                    />
+                </content>
+            </OverflowToolbar>
+        </smartTable:customToolbar>
+        <Table
+            growing="true"
+            sticky="ColumnHeaders,HeaderToolbar"
+            mode="MultiSelect"
+            selectionChange="onTblItmSlct"
+            multiSelectMode="ClearAll"
+        >
             <columns>
                 <Column width="13rem">
                     <Text text="{i18n>columnCustomer}" />
@@ -76,6 +94,7 @@
                 </Column>
                 <Column
                     minScreenWidth="Desktop"
+                    width="5rem"
                     demandPopin="true"
                 >
                     <Text text="{i18n>columnUnit}" />
@@ -128,6 +147,7 @@
                 <Column
                     minScreenWidth="1600px"
                     demandPopin="true"
+                    visible="false"
                 >
                     <Text text="{i18n>columnValidFrom}" />
                     <customData>
@@ -140,6 +160,7 @@
                 <Column
                     minScreenWidth="1600px"
                     demandPopin="true"
+                    visible="false"
                 >
                     <Text text="{i18n>columnValidTo}" />
                     <customData>
@@ -175,25 +196,20 @@
                     </customData>
                 </Column>
                 <Column
-                    minScreenWidth="1600px"
-                    demandPopin="true"
                     hAlign="End"
+                    width="8rem"
                 >
-                   <Label text="{i18n>columnEndUserInvoice}"/>
-                <customData>
+                    <Text text="{i18n>columnEndUserInvoice}" />
+                    <customData>
                         <core:CustomData
                             key="p13nData"
                             value="{'columnKey': 'EndUserInvoice', 'columnIndex': '13', 'leadingProperty': 'EndUserInvoice', 'sortProperty': 'EndUserInvoice', 'filterProperty': 'EndUserInvoice'}"
                         />
                     </customData>
                 </Column>
-                <Column
-                    minScreenWidth="1600px"
-                    demandPopin="true"
-                    hAlign="End" 
-                >
-                    <Label text="{i18n>colunmEndUserShipDate}"/>
-                     <customData>
+                <Column width="10rem">
+                    <Text text="{i18n>colunmEndUserShipDate}" />
+                    <customData>
                         <core:CustomData
                             key="p13nData"
                             value="{'columnKey': 'EndUserShipDate', 'columnIndex': '14', 'leadingProperty': 'EndUserShipDate', 'sortProperty': 'EndUserShipDate', 'filterProperty': 'EndUserShipDate'}"
@@ -201,12 +217,11 @@
                     </customData>
                 </Column>
                 <Column
-                    minScreenWidth="1600px"
-                    demandPopin="true"
-                    hAlign="End"  
+                    hAlign="End"
+                    width="6rem"
                 >
-                    <Label text="{i18n>colunmQuantity}"/>
-                     <customData>
+                    <Text text="{i18n>colunmQuantity}" />
+                    <customData>
                         <core:CustomData
                             key="p13nData"
                             value="{'columnKey': 'Quantity', 'columnIndex': '15', 'leadingProperty': 'Quantity', 'sortProperty': 'Quantity', 'filterProperty': 'Quantity'}"
@@ -277,13 +292,39 @@
                                 type: 'sap.ui.model.type.Currency'
                             }"
                         />
-                        <Input value="{Invoice}" />
-                        <DatePicker value="{ShipDate}" />
-                        <Input value="{Quantity}" />
+                        <Input
+                            visible="false"
+                            change="onClmFldEdit"
+                            maxLength="10"
+                        >
+                            <customData>
+                                <core:CustomData key="INVOICE_NO" />
+                            </customData>
+                        </Input>
+                        <DatePicker
+                            visible="false"
+                            change="onClmFldEdit"
+                            displayFormat="YYYY/MM/dd"
+                            valueFormat="YYYY-MM-dd"
+                            maxDate="{oUserEditMdl>/maxDate}"
+                            minDate="{oUserEditMdl>/minDate}"
+                        >
+                            <customData>
+                                <core:CustomData key="SHIP_DATE" />
+                            </customData>
+                        </DatePicker>
+                        <Input
+                            visible="false"
+                            change="onClmFldEdit"
+                            maxLength="10"
+                        >
+                            <customData>
+                                <core:CustomData key="QUANTITY_SOLD" />
+                            </customData>
+                        </Input>
                     </cells>
                 </ColumnListItem>
             </items>
         </Table>
-       
     </smartTable:SmartTable>
 </core:FragmentDefinition>

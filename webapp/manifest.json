@@ -53,7 +53,7 @@
         }
     },
     "sap.cloud": {
-        "service":"ranpak-wz-rebatelist",
+        "service": "ranpak-wz-rebatelist",
         "public": true
     },
     "sap.ui": {
@@ -106,24 +106,36 @@
                 "type": "sap.ui.model.odata.v2.ODataModel",
                 "preload": true
             },
-            "AppModel": {
-                "type": "sap.ui.model.json.JSONModel",
-                "settings": {},
-                "preload": false
-            },
             "oPOSTMdl": {
                 "dataSource": "oMyRebatesPost_alias",
                 "type": "sap.ui.model.odata.v2.ODataModel",
                 "preload": true
             },
-            "newData":{
+            "oUserEditMdl": {
                 "type": "sap.ui.model.json.JSONModel"
-              }
+            },
+            "oAttachmentMdl": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
+            "oBlkUpldMdl": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
+            "oTblColHdrMdl": {
+                "type": "sap.ui.model.json.JSONModel"
+            }
         },
         "resources": {
             "css": [
                 {
                     "uri": "css/style.css"
+                }
+            ],
+            "js": [
+                {
+                    "uri": "artifacts/jszip.js"
+                },
+                {
+                    "uri": "artifacts/xlsx.js"
                 }
             ]
         },
@@ -141,7 +153,9 @@
                 {
                     "name": "ListView",
                     "pattern": "",
-                    "target": ["ListView"]
+                    "target": [
+                        "ListView"
+                    ]
                 }
             ],
             "targets": {
