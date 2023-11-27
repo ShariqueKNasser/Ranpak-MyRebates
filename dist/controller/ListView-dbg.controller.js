@@ -30,9 +30,7 @@ sap.ui.define([
             this.oFiltrKeys = ["RebateID", "ValidTo", "CustomerID", "EndUserID", "MaterialID", "Status"];
             this.oClmSbmsnDt = [];
 
-            var oAttachmentMdl = this.getOwnerComponent().getModel("oAttachmentMdl");
-            oAttachmentMdl.setProperty("/results", []);
-            oAttachmentMdl.refresh(true);
+            this.resetAttachMdl();
 
             const fnValidator = function (args) {
                 const text = args.text;
@@ -48,7 +46,6 @@ sap.ui.define([
         },
 
         onFilterClear: function (oEvent) {
-            var oAttachmentMdl = this.getOwnerComponent().getModel("oAttachmentMdl");
             var oFiltrBar = this.getView().byId("idMyRebatesFB");
             var oFiltrCntrl = "";
             for (var i = 0; i < this.oFiltrKeys.length; i++) {
@@ -69,9 +66,7 @@ sap.ui.define([
             var oSlctdItmList = oMyRebatesTbl.getTable().getSelectedItems();
             this.onTblMutliDSlct(oMyRebatesPg, oSlctdItmList);
             oFiltrBar.fireSearch();
-
-            oAttachmentMdl.setProperty("/results", []);
-            oAttachmentMdl.refresh(true);
+            this.resetAttachMdl();
         },
 
         onBeforeRebindTbl: function (oEvent) {
@@ -675,10 +670,7 @@ sap.ui.define([
         },
 
         onClmWithDocCncl: function () {
-            var oAttachmentMdl = this.getOwnerComponent().getModel("oAttachmentMdl");
-            oAttachmentMdl.setProperty("/results", []);
-            oAttachmentMdl.refresh(true);
-
+            this.resetAttachMdl();
             this.byId("idAttachmentDlg").close();
             this.byId("idMyRebatesPg").setShowFooter(true);
         },
@@ -759,9 +751,9 @@ sap.ui.define([
 
         resetBlkClmWiz: function () {
             (this.oBlkRbtClmWiz).setCurrentStep(this.idDwnldTmpltWizStp);
-
             var oBlkSubmitBtn = this.getView().byId("idBlkSubmitBtn");
             oBlkSubmitBtn.setEnabled(false);
+            this.resetAttachMdl();
         },
 
         onBlkCncl: function () {
@@ -858,6 +850,8 @@ sap.ui.define([
         generateTblTmplt: function (columnName) {
             var that = this;
             var oUICntrl = "";
+            var oCurrDt = new Date();
+            var oPriorDate = new Date(new Date().setDate(oCurrDt.getDate() - 60));
             if (columnName) {
                 if ((columnName.toUpperCase()).indexOf("DATE") !== -1) {
                     oUICntrl = new DatePicker({
@@ -872,7 +866,9 @@ sap.ui.define([
                             if (oEvent.getSource().getBindingContext("oBlkUpldMdl")) {
                                 oEvent.getSource().getBindingContext("oBlkUpldMdl").getObject()[oEvent.getSource().getBindingInfo("value").parts[0].path] = oEvent.getSource().getValue();
                             }
-                        }
+                        },
+                        maxDate: oCurrDt,
+                        minDate: oPriorDate
                     });
                     return oUICntrl;
                 } else if ((columnName.toUpperCase()).indexOf("#") !== -1 || (columnName.toUpperCase()).indexOf("NUMBER") !== -1) {
@@ -988,6 +984,12 @@ sap.ui.define([
                 });
             });
             oBlkUpldTbl.bindRows("oBlkUpldMdl>/rows");
+        },
+
+        resetAttachMdl: function () {
+            var oAttachmentMdl = this.getOwnerComponent().getModel("oAttachmentMdl");
+            oAttachmentMdl.setProperty("/results", []);
+            oAttachmentMdl.refresh(true);
         }
     });
 });
