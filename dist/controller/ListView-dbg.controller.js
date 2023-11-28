@@ -644,7 +644,7 @@ sap.ui.define([
                         oResponseMsg = oResponse[j].Messages;
 
                         if (oResponse.length === that.oClmSbmsnDt.length) {
-                            oRebateID = that.oClmSbmsnDt[j].Rebate_ID;
+                            oRebateID = that.oClmSbmsnDt[j].RebateID;
                             if (oResponseStatus === "E" || oResponseStatus === "W") {
                                 if (oResponseMsg) {
                                     oResponseMsg = oResponseMsg.split(":")[1];
