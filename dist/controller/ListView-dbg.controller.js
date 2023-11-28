@@ -451,6 +451,7 @@ sap.ui.define([
                 oRtrnVal = 2;
                 var oView = this.getView();
                 var that = this;
+                var oSubmitWithDocBtn = this.getView().byId("idSubmitWithDocBtn");
                 if (!this.byId("idAttachmentDlg")) {
                     Fragment.load({
                         id: oView.getId(),
@@ -460,11 +461,19 @@ sap.ui.define([
                         oView.addDependent(oDialog);
                         oDialog.open();
                         oView.byId("idMyRebatesPg").setShowFooter(false);
+                        that.resetAttachMdl();
+                        if (oSubmitWithDocBtn) {
+                            oSubmitWithDocBtn.setEnabled(false);
+                        }
                         (that.oBusyDialog).close();
                     });
                 } else {
                     this.byId("idAttachmentDlg").open();
                     this.byId("idMyRebatesPg").setShowFooter(false);
+                    this.resetAttachMdl();
+                    if (oSubmitWithDocBtn) {
+                        oSubmitWithDocBtn.setEnabled(false);
+                    }
                     (this.oBusyDialog).close();
                 }
             }
@@ -636,7 +645,7 @@ sap.ui.define([
 
                         if (oResponse.length === that.oClmSbmsnDt.length) {
                             oRebateID = that.oClmSbmsnDt[j].Rebate_ID;
-                            if (oResponseStatus === "E") {
+                            if (oResponseStatus === "E" || oResponseStatus === "W") {
                                 if (oResponseMsg) {
                                     oResponseMsg = oResponseMsg.split(":")[1];
                                 }
@@ -644,15 +653,15 @@ sap.ui.define([
                             } else if (oResponseStatus === "S") {
                                 isStatusSuccess = 1;
                                 oFinalMsg += oResponseMsg;
-                                that.upldDocToSharePoint(oFinalMsg);
+                                that.upldDocToSharePoint(oFinalMsg, fromBlk, oFinalPayload);
                             }
                         } else {
-                            if (oResponseStatus === "E") {
+                            if (oResponseStatus === "E" || oResponseStatus === "W") {
                                 oFinalMsg += "\n" + oResponseMsg;
                             } else if (oResponseStatus === "S") {
                                 isStatusSuccess = 1;
                                 oFinalMsg += "\n" + oResponseMsg;
-                                that.upldDocToSharePoint(oFinalMsg);
+                                that.upldDocToSharePoint(oFinalMsg, fromBlk, oFinalPayload);
                             }
                         }
                     }
@@ -675,7 +684,7 @@ sap.ui.define([
             this.byId("idMyRebatesPg").setShowFooter(true);
         },
 
-        upldDocToSharePoint: function (oFinalMsg) {
+        upldDocToSharePoint: function (oFinalMsg, fromBlk, oFinalPayload) {
             (this.oBusyDialog).open();
             var that = this;
             var oAttachmentMdl = this.getOwnerComponent().getModel("oAttachmentMdl");
@@ -687,16 +696,35 @@ sap.ui.define([
                     "content": oAttachmentMdlDt[i].b64Content
                 });
             }
-            var oPayload = {
-                "customerId": (this.oClmSbmsnDt)[0].CustomerID,
-                "customerName": (this.oClmSbmsnDt)[0].CustomerDescription,
-                "rebateClaimNo": (this.oClmSbmsnDt)[0].RebateID,
-                "docs": oDocs
-            };
+
+            var oPayload = {};
+            var oCreditNote = "";
+            oCreditNote = oFinalMsg.match(/(\d+)/)[0];
+            if (fromBlk) {
+                oPayload = {
+                    "customerId": (oFinalPayload).dummytoexcelset[0].Distributor_No,
+                    "customerName": (oFinalPayload).dummytoexcelset[0].Distributor_Name,
+                    "rebateClaimNo": oCreditNote,
+                    "docs": oDocs
+                };
+            } else {
+                oPayload = {
+                    "customerId": (this.oClmSbmsnDt)[0].CustomerID,
+                    "customerName": (this.oClmSbmsnDt)[0].CustomerDescription,
+                    "rebateClaimNo": oCreditNote,
+                    "docs": oDocs
+                };
+            }
+
             var oSrvMdl = this.getOwnerComponent().getModel();
             oSrvMdl.create("/UploadDocuments", oPayload, {
                 success: function (oEvent) {
-                    that.byId("idAttachmentDlg").close();
+                    if (that.byId("idAttachmentDlg")) {
+                        that.byId("idAttachmentDlg").close();
+                    }
+                    if (that.byId("idBlkRbtClmDlg")) {
+                        that.byId("idBlkRbtClmDlg").close();
+                    }
                     (that.oBusyDialog).close();
                     MessageBox.success(oFinalMsg + "\n" + "Supporting documents uploaded successfully", {
                         onClose: function () {
@@ -705,7 +733,9 @@ sap.ui.define([
                     });
                 },
                 error: function (oEvent) {
-                    that.byId("idAttachmentDlg").close();
+                    if (that.byId("idAttachmentDlg")) {
+                        that.byId("idAttachmentDlg").close();
+                    }
                     (that.oBusyDialog).close();
                     var oErrObj = JSON.parse(oEvent.responseText);
                     var oErr = oErrObj.error.message.value + ". " + (that.oI18n).getText("TRY_AGAIN");
@@ -771,6 +801,9 @@ sap.ui.define([
         onUpldTemplt: function (oEvent) {
             (this.oBusyDialog).open();
             var oUploadedFile = oEvent.getSource().oFileUpload.files[0];
+            this.resetAttachMdl();
+            var oBlkSubmitBtn = this.getView().byId("idBlkSubmitBtn");
+            oBlkSubmitBtn.setEnabled(false);
             this.oParseExcel(oUploadedFile);
         },
 
@@ -799,6 +832,7 @@ sap.ui.define([
                     } else {
                         MessageBox.error((that.oI18n).getText("UPLOAD_FILE_EMPTY"));
                         (that.oBlkRbtClmWiz).setCurrentStep(that.oUpldTmpltWizStp);
+                        (that.oBusyDialog).close();
                     }
                 };
                 reader.readAsBinaryString(oUploadedFile);
@@ -875,10 +909,10 @@ sap.ui.define([
                     oUICntrl = new Input({
                         "value": {
                             path: "oBlkUpldMdl>" + columnName,
-                            formatter: this.validateNumFldBlk
+                            formatter: this.validateAlphaNumFldBlk
                         },
                         change: function (oEvent) {
-                            var isValid = that.validateNumberFld(oEvent);
+                            var isValid = that.validateAlphaNumFld(oEvent);
                             if (isValid) {
                                 oEvent.getSource().setValueState("None");
                             } else {
@@ -915,6 +949,19 @@ sap.ui.define([
 
                             if (oEvent.getSource().getBindingContext("oBlkUpldMdl")) {
                                 oEvent.getSource().getBindingContext("oBlkUpldMdl").getObject()[oEvent.getSource().getBindingInfo("value").parts[0].path] = oEvent.getSource().getValue();
+                            }
+                        }
+                    });
+                    return oUICntrl;
+                } else if ((columnName.toUpperCase()).indexOf("NAME") !== -1) {
+                    oUICntrl = new Input({
+                        "value": {
+                            path: "oBlkUpldMdl>" + columnName
+                        },
+                        change: function (oEvent) {
+                            var oVal = oEvent.getSource().getValue();
+                            if (oEvent.getSource().getBindingContext("oBlkUpldMdl")) {
+                                oEvent.getSource().getBindingContext("oBlkUpldMdl").getObject()[oEvent.getSource().getBindingInfo("value").parts[0].path] = oVal;
                             }
                         }
                     });
@@ -984,12 +1031,6 @@ sap.ui.define([
                 });
             });
             oBlkUpldTbl.bindRows("oBlkUpldMdl>/rows");
-        },
-
-        resetAttachMdl: function () {
-            var oAttachmentMdl = this.getOwnerComponent().getModel("oAttachmentMdl");
-            oAttachmentMdl.setProperty("/results", []);
-            oAttachmentMdl.refresh(true);
         }
     });
 });

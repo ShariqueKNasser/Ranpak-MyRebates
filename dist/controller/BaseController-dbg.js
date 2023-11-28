@@ -112,10 +112,14 @@ sap.ui.define([
 		},
 
 		validateDateFldBlk: function (oVal) {
+			var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+				pattern: "YYYY/MM/dd"
+			});
 			var oFinalVal = "";
-			var oRegEx = /^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])$/;
-			if (oRegEx.test(oVal)) {
+			var oValidDate = isNaN(Date.parse(oVal));
+			if (!oValidDate) {
 				oFinalVal = oVal;
+				oFinalVal = oDateFormat.format(new Date(oFinalVal));
 				this.setValueState("None");
 			} else {
 				this.setValueState("Error");
@@ -253,6 +257,12 @@ sap.ui.define([
 				}
 				MessageBox.error((this.oI18n).getText("VALIDATE_PAYLOAD_ERR") + ",\n" + oErrMsg);
 			}
+		},
+
+		resetAttachMdl: function () {
+			var oAttachmentMdl = this.getOwnerComponent().getModel("oAttachmentMdl");
+			oAttachmentMdl.setProperty("/results", []);
+			oAttachmentMdl.refresh(true);
 		}
 	});
 });
