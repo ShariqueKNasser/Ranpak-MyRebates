@@ -284,11 +284,10 @@ sap.ui.define([
         },
 
         GetStatusState: function (sStatus) {
-            const oI18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            if (sStatus === oI18n.getText("filterStatusActive")) {
+            if (sStatus === (this.oI18n).getText("filterStatusActive")) {
                 return "Success";
             }
-            if (sStatus === oI18n.getText("filterStatusExpired")) {
+            if (sStatus === (this.oI18n).getText("filterStatusExpired")) {
                 return "Error";
             }
         },
@@ -315,7 +314,7 @@ sap.ui.define([
             (this.oUserEditMdl).refresh(true);
         },
 
-        onTblItmSnglSlctn: function (oSlctdItm, oSlctdItmCells, oSlctdItmStatus, isItmSlctd, oMyRebatesTblSlctdItms, oMyRebatesPg) {
+        onTblItmSnglSlctn: function (oSlctdItm, oSlctdItmCells, oSlctdItmStatus, isItmSlctd, oMyRebatesTblSlctdItms, oMyRebatesPg, oSlctdItmCntxt) {
             var oCellCustomDt;
             if (oSlctdItmStatus === "Expired") {
                 //ITEM WITH EXPIRED STATUS SHOULD NOT BE ALLOWED TO SELECT
@@ -340,6 +339,7 @@ sap.ui.define([
                     if (!oMyRebatesPg.getShowFooter()) {
                         oMyRebatesPg.setShowFooter(true);
                     }
+                    this.formClmSubmsnDt(oSlctdItmCntxt, isItmSlctd);
                 }
             }
         },
@@ -361,8 +361,7 @@ sap.ui.define([
                 var oSlctdItmCells = oSlctdItm.getCells();
                 var isItmSlctd = oEvent.getParameter("selected");
 
-                this.onTblItmSnglSlctn(oSlctdItm, oSlctdItmCells, oSlctdItmStatus, isItmSlctd, oMyRebatesTblSlctdItms, oMyRebatesPg);
-                this.formClmSubmsnDt(oSlctdItmCntxt, isItmSlctd);
+                this.onTblItmSnglSlctn(oSlctdItm, oSlctdItmCells, oSlctdItmStatus, isItmSlctd, oMyRebatesTblSlctdItms, oMyRebatesPg, oSlctdItmCntxt);
             }
         },
 
@@ -505,17 +504,22 @@ sap.ui.define([
                     "PDF" || oType === "DOCX" || oType === "DOC" || oType === "TXT" || oType === "PPTX" || oType === "PPT" ||
                     oType === "MSG" || oType === "EML") {
                     for (var j = 0; j < oAttachmentsMdlDt.length; j++) {
-                        oDocCount += oAttachmentsMdlDt[j].FilesizeMB;
+                        if (oFileName === oAttachmentsMdlDt[j].fileName) {
+                            MessageToast.show((this.oI18n).getText("SAME_FILE_NAME"));
+                            return;
+                        } else {
+                            oDocCount += parseFloat((oAttachmentsMdlDt[j].fileSize).split(" MB")[0]);
+                        }
                     }
                     oDocCount += oFileSize;
                     if (oDocCount > 50) {
-                        MessageToast.show((this.oI18n).getResourceBundle().getText("DOC_SIZE_ERROR"));
+                        MessageToast.show((this.oI18n).getText("DOC_SIZE_ERROR"));
                     } else {
                         this.updateAttachmentsModel(oUploadedFiles[i], oAttachmentMdl, oAttachmentsMdlDt, oFileName, oFileSizeBytes, oFileSize,
                             oType);
                     }
                 } else {
-                    MessageToast.show((this.oI18n).getResourceBundle().getText("SUPPORTED_DOC"));
+                    MessageToast.show((this.oI18n).getText("SUPPORTED_DOC"));
                 }
             }
         },
@@ -582,6 +586,7 @@ sap.ui.define([
             var oDataToPost = [];
             var oRebateID = "", oStrLngth;
             for (var i = 0; i < (this.oClmSbmsnDt).length; i++) {
+                oRebateID = "";
                 oStrLngth = 10 - ((this.oClmSbmsnDt)[i].RebateID).length;
                 for (var j = 0; j < oStrLngth; j++) {
                     oRebateID += "0";
@@ -652,7 +657,7 @@ sap.ui.define([
                                 oFinalMsg += "\nRebate ID " + oRebateID + " : " + oResponseMsg;
                             } else if (oResponseStatus === "S") {
                                 isStatusSuccess = 1;
-                                oFinalMsg += oResponseMsg;
+                                oFinalMsg += "\n" + oResponseMsg;
                                 that.upldDocToSharePoint(oFinalMsg, fromBlk, oFinalPayload);
                             }
                         } else {
@@ -726,7 +731,7 @@ sap.ui.define([
                         that.byId("idBlkRbtClmDlg").close();
                     }
                     (that.oBusyDialog).close();
-                    MessageBox.success(oFinalMsg + "\n" + "Supporting documents uploaded successfully", {
+                    MessageBox.success(oFinalMsg + "\n\n" + "Supporting documents uploaded successfully", {
                         onClose: function () {
                             that.onFilterClear();
                         }
@@ -810,32 +815,40 @@ sap.ui.define([
         oParseExcel: function (oUploadedFile) {
             var that = this;
             var oExcelDt = {},
-                oWS = "";
-            if (oUploadedFile && window.FileReader) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var data = e.target.result;
-                    var workbook = XLSX.read(data, {
-                        type: "binary"
-                    });
-                    workbook.SheetNames.forEach(function (sheetName) {
-                        oWS = workbook.Sheets[sheetName];
-                        oExcelDt = XLSX.utils.sheet_to_row_object_array(oWS);
-                    });
+                oWS = "",
+                oFileName = oUploadedFile.name,
+                oFileType = oFileName.substring(oFileName.lastIndexOf('.') + 1, oFileName.length) || oFileName;
+            oFileType = oFileType.toUpperCase();
+            if (oFileType === "XLSX") {
+                if (oUploadedFile && window.FileReader) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var data = e.target.result;
+                        var workbook = XLSX.read(data, {
+                            type: "binary"
+                        });
+                        workbook.SheetNames.forEach(function (sheetName) {
+                            oWS = workbook.Sheets[sheetName];
+                            oExcelDt = XLSX.utils.sheet_to_row_object_array(oWS);
+                        });
 
-                    if (oExcelDt.length > 0) {
-                        that.setExcelDtToTbl(oWS, oExcelDt);
-                        that.generateTable();
-                        (that.oBlkRbtClmWiz).setCurrentStep(that.oReviewWizStp);
-                        (that.oBlkRbtClmWiz).setCurrentStep(that.oAttachUpldWizStp);
-                        that.upldTmpltToAttachMdl(oUploadedFile);
-                    } else {
-                        MessageBox.error((that.oI18n).getText("UPLOAD_FILE_EMPTY"));
-                        (that.oBlkRbtClmWiz).setCurrentStep(that.oUpldTmpltWizStp);
-                        (that.oBusyDialog).close();
-                    }
-                };
-                reader.readAsBinaryString(oUploadedFile);
+                        if (oExcelDt.length > 0) {
+                            that.setExcelDtToTbl(oWS, oExcelDt);
+                            that.generateTable();
+                            (that.oBlkRbtClmWiz).setCurrentStep(that.oReviewWizStp);
+                            (that.oBlkRbtClmWiz).setCurrentStep(that.oAttachUpldWizStp);
+                            that.upldTmpltToAttachMdl(oUploadedFile);
+                        } else {
+                            MessageBox.error((that.oI18n).getText("UPLOAD_FILE_EMPTY"));
+                            (that.oBlkRbtClmWiz).setCurrentStep(that.oUpldTmpltWizStp);
+                            (that.oBusyDialog).close();
+                        }
+                    };
+                    reader.readAsBinaryString(oUploadedFile);
+                }
+            } else {
+                MessageBox.error((this.oI18n).getText("UNSUPPORTED_FILE_TYPE"));
+                (this.oBusyDialog).close();
             }
         },
 
