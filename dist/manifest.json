@@ -119,6 +119,9 @@
             },
             "oBlkUpldMdl": {
                 "type": "sap.ui.model.json.JSONModel"
+            },
+            "oPOSTResponseMdl": {
+                "type": "sap.ui.model.json.JSONModel"
             }
         },
         "resources": {

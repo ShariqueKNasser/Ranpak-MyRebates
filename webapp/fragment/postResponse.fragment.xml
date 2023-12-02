@@ -1,0 +1,44 @@
+<core:FragmentDefinition
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:ui="sap.ui.unified"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+>
+    <Dialog
+        id="idPostResponseDlg"
+        title="{i18n>REBATE_CLAIM_SUBMISSION}"
+        class="sapUiContentPadding"
+    >
+        <content>
+            <VBox items="{oPOSTResponseMdl>/results}" class="sapUiTinyMargin">
+                <items>
+                    <HBox class="sapUiTinyMarginBottom">
+                        <core:Icon
+                            color="{path: 'oPOSTResponseMdl>msgType', formatter: 'ranpak.wz.rebatelist.model.formatter.formatDisplayIconClr'}"
+                            src="{path: 'oPOSTResponseMdl>msgType', formatter: 'ranpak.wz.rebatelist.model.formatter.formatDisplayIcon'}"
+                        />
+                        <Label
+                            text="{parts: [{path: 'oPOSTResponseMdl>msgType'}, {path: 'oPOSTResponseMdl>message'}], formatter: 'ranpak.wz.rebatelist.model.formatter.formatDisplayTitle'}"
+                            class="sapUiTinyMarginBegin"
+                        />
+                        <core:Icon
+                            src="sap-icon://message-information"
+                            press="onSuccInfoPress"
+                            class="sapUiTinyMarginBegin"
+                            tooltip="{i18n>columnRebateID}"
+                            visible="{path: 'oPOSTResponseMdl>msgType', formatter: 'ranpak.wz.rebatelist.model.formatter.formatDisplayRebateIcn'}"
+                        />
+                    </HBox>
+                </items>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button
+                text="Close"
+                press="onPostRespnsClose"
+                type="Emphasized"
+            />
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>
