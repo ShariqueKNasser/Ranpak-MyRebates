@@ -7,6 +7,9 @@ resources:
   configuration:
     propertiesFileSourceEncoding: UTF-8
 builder:
+  componentPreload:
+    excludes:
+      - "ranpak/wz/rebatelist/artifacts/**"
   resources:
     excludes:
       - "/test/**"

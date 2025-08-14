@@ -1,7 +1,7 @@
 _schema-version: "3.2"
 ID: ranpak-wz-rebatelist
 description: A Fiori application.
-version: 0.0.7
+version: 0.0.8
 modules:
 - name: ranpak-wz-rebatelist-dest-content
   type: com.sap.application.content
